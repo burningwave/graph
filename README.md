@@ -1,2 +1,2 @@
 # graph
-A framework for create graphs of synchronous/asynchronous method calls using JSon configuration
+ A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration

@@ -1,0 +1,65 @@
+{ 
+	"name" : "firstLevelGroup",
+	"async": true,
+	"functions": [
+		{
+			"name" : "daemons",
+			"async": true,
+			"onException": [
+				{
+					"directive": "STOP_ITERATION",
+					"targets": ["firstLevelGroup"] 
+				}
+			],
+			"functions": [
+				{
+					"name" : "daemon[0]",
+					"method": "#sharedService::waitFor"
+				}
+			]
+		},
+		{
+			"name" : "secondLevelGroup[0]",
+			"functions": [
+				{
+					"name" : "thirdLevelGroup[0]",
+					"method": "com.github.burningwave.graph.service.ServiceOne::staticLoad"
+				},{
+					"name" : "thirdLevelGroup[1]",
+					"method": "new com.github.burningwave.graph.service.ServiceOne::update"
+				}
+			]
+		},
+		{
+			"name" : "secondLevelGroup[1]",
+			"async": true,
+			"iterableObject": "context[inputCollection]",
+			"loopResult": "context[outputArray]",
+			"functions": [
+				{
+					"name" : "thirdLevelGroup[2]",
+					"async": true,
+					"onException": [
+						{
+							"directive": "STOP_ITERATION",
+							"targets": ["secondLevelGroup[1]"] 
+						},
+						{
+							"directive": "STOP_PROCESSING",
+							"targets": ["firstLevelGroup"] 
+						}
+					],
+					"functions": [
+						{
+							"name" : "fourthLevelGroup[0]",
+							"method": "#sharedService::load"
+						},{
+							"name" : "fourthLevelGroup[1]",
+							"method": "#sharedService::update"
+						}
+					]
+				}
+			]
+		}		
+	]
+}

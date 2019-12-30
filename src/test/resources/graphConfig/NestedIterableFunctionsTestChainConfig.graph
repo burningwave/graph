@@ -1,0 +1,47 @@
+{ 
+	"name" : "main",
+	"functions": [
+		{
+			"name" : "collectionLoader",
+			"method": "#service::loadCollectionOfCollection"
+		},{
+			"name" : "itemsManager",
+			"async": true,
+			"iterableObject": "context[listOfPersonList]",
+			"loopResult": "context[outputArray]",
+			"functions": [	
+				{
+					"name" : "itemsManager",
+					"async": true,
+					"iterableObject": "context.currentIteratedObject",
+					"loopResult": "context.currentIterationResult",
+					"functions": [
+						{
+							"name" : "itemManager",
+							"async": true,
+							"threadsNumber": "auto",
+							"functions": [
+								{
+									"name" : "setIdOnPerson",
+									"method": "#service::setIdOnPerson"
+								},{
+									"name" : "setNameOnPerson",
+									"method": "#service::setNameOnPerson"
+								},{
+									"name" : "setSurnameOnPerson",
+									"method": "#service::setSurnameOnPerson"
+								},{
+									"name" : "setSurnamOnPerson",
+									"method": "#service::setAddressOnPerson"
+								}
+							]
+						}
+					]
+				}
+			] 
+		},{
+			"name" : "collectionPrinter",
+			"method" : "#service::printAllArrayOfArrayOfPersons"
+		}		
+	]
+}
