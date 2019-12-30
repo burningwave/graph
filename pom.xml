@@ -3,7 +3,7 @@
 
 	<groupId>org.burningwave</groupId>
 	<artifactId>graph</artifactId>
-	<version>0.9.30-SNAPSHOT</version>
+	<version>0.9.30</version>
 	<packaging>jar</packaging>
 	<name>BurningWave Graph</name>
 	<url>https://github.com/burningwave/graph</url>
@@ -222,7 +222,7 @@
 		<connection>scm:git:git://github.com/burningwave/graph.git</connection>
 		<developerConnection>scm:git:git@github.com/burningwave/graph.git</developerConnection>
 		<url>https://github.com/burningwave/bw-graph</url>
-		<tag>HEAD</tag>
+		<tag>graph-0.9.30</tag>
 	</scm>
 
 	<profiles>
