@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>org.burningwave</groupId>
 	<artifactId>graph</artifactId>
 	<version>0.9.31-SNAPSHOT</version>
@@ -28,8 +27,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
+		<core.jdk.version>8</core.jdk.version>
 		<graph.skip.tests>true</graph.skip.tests>
 		<skipTests>${graph.skip.tests}</skipTests>
 		<graph.test.includes />
@@ -115,6 +113,16 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${core.jdk.version}</source>
+        			<target>${core.jdk.version}</target>
+        			<verbose>true</verbose>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>
@@ -193,9 +201,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
+				<version>3.1.1</version>
 				<configuration>
+					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 					<encoding>UTF-8</encoding>
+					<source>${core.jdk.version}</source>
 				</configuration>
 				<executions>
 					<execution>
@@ -221,7 +231,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/burningwave/graph.git</connection>
 		<developerConnection>scm:git:git@github.com/burningwave/graph.git</developerConnection>
-		<url>https://github.com/burningwave/bw-graph</url>
+		<url>https://github.com/burningwave/graph</url>
 		<tag>HEAD</tag>
 	</scm>
 
