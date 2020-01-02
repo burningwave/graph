@@ -37,7 +37,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<core.jdk.version>8</core.jdk.version>
+		<graph.jdk.version>8</graph.jdk.version>
 		<graph.skip.tests>true</graph.skip.tests>
 		<skipTests>${graph.skip.tests}</skipTests>
 		<graph.test.includes />
@@ -126,8 +126,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>${core.jdk.version}</source>
-        			<target>${core.jdk.version}</target>
+					<source>${graph.jdk.version}</source>
+        			<target>${graph.jdk.version}</target>
         			<verbose>true</verbose>
 				</configuration>
 			</plugin>
@@ -215,7 +215,7 @@
 				<configuration>
 					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 					<encoding>UTF-8</encoding>
-					<source>${core.jdk.version}</source>
+					<source>${graph.jdk.version}</source>
 				</configuration>
 				<executions>
 					<execution>
