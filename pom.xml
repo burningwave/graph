@@ -24,7 +24,9 @@
 	</developers>
 	<licenses>
 		<license>
+			<name>MIT License</name>
 			<url>https://github.com/burningwave/graph/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
 		</license>
 	</licenses>
 
