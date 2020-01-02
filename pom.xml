@@ -1,11 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>org.burningwave</groupId>
 	<artifactId>graph</artifactId>
+	
 	<version>0.9.31-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>BurningWave Graph</name>
-	<url>https://github.com/burningwave/graph</url>
+	<url>https://www.burningwave.org/</url>
+	
 	<description>
 		A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration
 	</description>
@@ -229,9 +232,9 @@
 		</repository>
 	</distributionManagement>
 	<scm>
-		<connection>scm:git:git://github.com/burningwave/graph.git</connection>
-		<developerConnection>scm:git:git@github.com/burningwave/graph.git</developerConnection>
 		<url>https://github.com/burningwave/graph</url>
+		<connection>scm:git:git://github.com/burningwave/graph.git</connection>
+		<developerConnection>scm:git:git@github.com:burningwave/graph.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
