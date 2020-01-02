@@ -9,6 +9,18 @@
 	<name>BurningWave Graph</name>
 	<url>https://www.burningwave.org/</url>
 	
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/burningwave/graph/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<organization>
+		<name>Burningwave</name>
+		<url>https://www.burningwave.org/</url>
+	</organization>
+	
 	<description>
 		A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration
 	</description>
@@ -22,13 +34,6 @@
 			</roles>
 		</developer>
 	</developers>
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>https://github.com/burningwave/graph/blob/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
