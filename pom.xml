@@ -17,7 +17,7 @@
 		</license>
 	</licenses>
 	<organization>
-		<name>Burningwave</name>
+		<name>BurningWave</name>
 		<url>https://www.burningwave.org/</url>
 	</organization>
 	
@@ -29,6 +29,8 @@
 			<name>Roberto Gentili</name>
 			<id>roberto.gentili</id>
 			<email>roberto.gentili.1980@gmail.com</email>
+			<organization>BurningWave</organization>
+			<organizationUrl>https://www.burningwave.org/</organizationUrl>
 			<roles>
 				<role>Administrator</role>
 				<role>Developer</role>
