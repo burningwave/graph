@@ -9,9 +9,9 @@ import java.util.stream.Stream;
 import org.burningwave.graph.Context;
 import org.burningwave.graph.bean.Person;
 
-import org.burningwave.core.Logger;
+import org.burningwave.core.ManagedLogger;
 
-public class ServiceTwo implements Logger {
+public class ServiceTwo implements ManagedLogger {
 
 	public static final int PERSONS_COLLECTION_SIZE = 10000;
 	public static final int PERSONS_COLLECTIONS_NUMBER = 100;

@@ -17,10 +17,10 @@ import org.burningwave.graph.service.ServiceOne;
 import org.burningwave.graph.service.ServiceTwo;
 import org.junit.jupiter.api.Test;
 
-import org.burningwave.core.Logger;
+import org.burningwave.core.ManagedLogger;
 
 
-public class FunctionsTest implements Logger {
+public class FunctionsTest implements ManagedLogger {
 		
 	@Test
 	public void testOne() {

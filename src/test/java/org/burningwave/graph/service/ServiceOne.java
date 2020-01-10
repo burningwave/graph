@@ -2,13 +2,11 @@ package org.burningwave.graph.service;
 
 import java.util.List;
 
+import org.burningwave.core.ManagedLogger;
 import org.burningwave.graph.IterableObjectSupport;
 import org.burningwave.graph.ListenableContext;
 
-import org.burningwave.core.Logger;
-import org.burningwave.core.common.LoggersRepository;
-
-public class ServiceOne implements Logger {
+public class ServiceOne implements ManagedLogger {
 	
 	public static int loadCounter = 1;
 	public static int updateCounter = 1;
@@ -39,7 +37,7 @@ public class ServiceOne implements Logger {
 		if (obj != null) {
 			idx = ctx.getInputCollection().indexOf(obj);
 		}
-		LoggersRepository.logInfo(ServiceOne.class, "LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
+		ManagedLogger.Repository.logInfo(ServiceOne.class, "LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
 		return ctx;
 	}
 	
