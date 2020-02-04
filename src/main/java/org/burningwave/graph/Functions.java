@@ -44,9 +44,9 @@ import java.util.stream.Stream;
 import org.burningwave.graph.ControllableContext.Directive;
 
 import org.burningwave.Throwables;
-import org.burningwave.core.CommandWrapper;
 import org.burningwave.core.Component;
-import org.burningwave.core.Group;
+import org.burningwave.core.extension.CommandWrapper;
+import org.burningwave.core.extension.Group;
 import org.burningwave.core.iterable.IterableObjectHelper;
 import org.burningwave.core.reflection.PropertyAccessor;
 

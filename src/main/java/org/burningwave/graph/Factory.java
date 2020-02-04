@@ -45,13 +45,13 @@ import java.util.stream.Stream;
 import org.burningwave.graph.ControllableContext.Directive;
 
 import org.burningwave.Throwables;
-import org.burningwave.core.CommandWrapper;
 import org.burningwave.core.Component;
 import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
 import org.burningwave.core.classes.MethodCriteria;
 import org.burningwave.core.common.Strings;
+import org.burningwave.core.extension.CommandWrapper;
 
 
 public class Factory implements Component {

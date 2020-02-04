@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.burningwave.core.Component;
-import org.burningwave.core.concurrent.Mutex;
+import org.burningwave.core.extension.concurrent.Mutex;
 
 public interface Context extends 
 	Component, 
