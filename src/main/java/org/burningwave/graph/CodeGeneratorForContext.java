@@ -28,9 +28,9 @@
  */
 package org.burningwave.graph;
 
+import org.burningwave.core.Strings;
 import org.burningwave.core.classes.CodeGenerator;
 import org.burningwave.core.classes.MemberFinder;
-import org.burningwave.core.common.Strings;
 import org.burningwave.core.io.StreamHelper;
 
 public class CodeGeneratorForContext extends CodeGenerator.ForPojo {

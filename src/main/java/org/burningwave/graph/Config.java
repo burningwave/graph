@@ -45,8 +45,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.burningwave.Throwables;
 import org.burningwave.core.Component;
+import org.burningwave.core.Strings;
 import org.burningwave.core.assembler.ComponentSupplier;
-import org.burningwave.core.common.Strings;
 import org.burningwave.core.io.PathHelper;
 
 
