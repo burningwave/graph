@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.burningwave.ManagedLogger;
 import org.burningwave.graph.Config;
 import org.burningwave.graph.Context;
 import org.burningwave.graph.Factory;
@@ -16,8 +17,6 @@ import org.burningwave.graph.bean.Person;
 import org.burningwave.graph.service.ServiceOne;
 import org.burningwave.graph.service.ServiceTwo;
 import org.junit.jupiter.api.Test;
-
-import org.burningwave.core.ManagedLogger;
 
 
 public class FunctionsTest implements ManagedLogger {

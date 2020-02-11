@@ -2,7 +2,7 @@ package org.burningwave.graph.service;
 
 import java.util.List;
 
-import org.burningwave.core.ManagedLogger;
+import org.burningwave.ManagedLogger;
 import org.burningwave.graph.IterableObjectSupport;
 import org.burningwave.graph.ListenableContext;
 
