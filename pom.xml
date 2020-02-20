@@ -246,7 +246,7 @@
 		<url>https://github.com/burningwave/graph</url>
 		<connection>scm:git:git://github.com/burningwave/graph.git</connection>
 		<developerConnection>scm:git:git@github.com:burningwave/graph.git</developerConnection>
-		<tag>graph-0.9.35</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<profiles>
