@@ -30,38 +30,46 @@ package org.burningwave.core.extension;
 
 import org.burningwave.core.Component;
 
-public abstract class CommandWrapper<T, I, O>  implements Component {
-	T command;
-	Object target;
+public abstract class CommandWrapper<T, C, I, O>  implements Component {
+	C command;
+	T target;
 	
-	public Object getTarget() {
+	public T getTarget() {
 		return target;
 	}
 
 	public abstract O executeOn(I data);
 	
 	@SuppressWarnings("unchecked")
-	public static <F, I, O, W extends CommandWrapper<F ,I, O>> W create(
-		F functionInterface, Object instance) throws Throwable {
+	public static <T, F, I, O, W extends CommandWrapper<T, F ,I, O>> W create(
+		F functionInterface, T instance) throws Throwable {
 		if (functionInterface instanceof java.lang.Runnable) {
-			return (W)new Runnable<I, O>(instance, (java.lang.Runnable)functionInterface);
+			return (W)new Runnable<T, I, O>(instance, (java.lang.Runnable)functionInterface);
+		} else if (functionInterface instanceof java.util.function.Predicate) {
+			return (W)new Predicate<T, I, O>(instance, (java.util.function.Predicate<I>)functionInterface);
+		} else if (functionInterface instanceof java.util.function.BiPredicate) {
+			return (W)new BiPredicate<T, I, O>(instance, (java.util.function.BiPredicate<T, I>)functionInterface);
 		} else if (functionInterface instanceof java.util.function.Consumer) {
-			return (W)new Consumer<I, O>(instance, (java.util.function.Consumer<I>)functionInterface);
+			return (W)new Consumer<T, I, O>(instance, (java.util.function.Consumer<I>)functionInterface);
+		} else if (functionInterface instanceof java.util.function.BiConsumer) {
+			return (W)new BiConsumer<T, I, O>(instance, (java.util.function.BiConsumer<T, I>)functionInterface);
 		} else if (functionInterface instanceof java.util.function.Supplier) {
-			return (W)new Supplier<I, O>(instance, ((java.util.function.Supplier<O>)functionInterface));
+			return (W)new Supplier<T, I, O>(instance, ((java.util.function.Supplier<O>)functionInterface));
 		} else if (functionInterface instanceof java.util.function.Function) {
-			return (W)new Function<I, O>(instance, ((java.util.function.Function<I, O>)functionInterface));
+			return (W)new Function<T, I, O>(instance, ((java.util.function.Function<I, O>)functionInterface));
+		} else if (functionInterface instanceof java.util.function.BiFunction) {
+			return (W)new BiFunction<T, I, O>(instance, ((java.util.function.BiFunction<T, I, O>)functionInterface));
 		} 
 		return null;
 	}
 
-	CommandWrapper(Object target, T t) {
+	CommandWrapper(T target, C t) {
 		this.target = target;
 		this.command = t;
 	}
 	
-	static class Function<I, O> extends CommandWrapper<java.util.function.Function<I, O>, I, O> {
-		Function(Object target, java.util.function.Function<I, O> t) {
+	static class Function<T, I, O> extends CommandWrapper<T, java.util.function.Function<I, O>, I, O> {
+		Function(T target, java.util.function.Function<I, O> t) {
 			super(target, t);
 		}
 
@@ -72,8 +80,20 @@ public abstract class CommandWrapper<T, I, O>  implements Component {
 
 	}
 	
-	static class Consumer<I, O> extends CommandWrapper<java.util.function.Consumer<I>, I, O> {
-		Consumer(Object target, java.util.function.Consumer<I> t) {
+	static class BiFunction<T, I, O> extends CommandWrapper<T, java.util.function.BiFunction<T, I, O>, I, O> {
+		BiFunction(T target, java.util.function.BiFunction<T, I, O> t) {
+			super(target, t);
+		}
+
+		@Override
+		public O executeOn(I data) {
+			return command.apply(target, data);
+		}
+
+	}
+	
+	static class Consumer<T, I, O> extends CommandWrapper<T, java.util.function.Consumer<I>, I, O> {
+		Consumer(T target, java.util.function.Consumer<I> t) {
 			super(target, t);
 		}
 
@@ -85,8 +105,21 @@ public abstract class CommandWrapper<T, I, O>  implements Component {
 		}
 	}
 	
-	static class Supplier<I, O> extends CommandWrapper<java.util.function.Supplier<O>, I, O> {
-		Supplier(Object target, java.util.function.Supplier<O> t) {
+	static class BiConsumer<T, I, O> extends CommandWrapper<T, java.util.function.BiConsumer<T, I>, I, O> {
+		BiConsumer(T target, java.util.function.BiConsumer<T, I> t) {
+			super(target, t);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public O executeOn(I data) {
+			command.accept(target, data);
+			return (O)data;
+		}
+	}
+	
+	static class Supplier<T, I, O> extends CommandWrapper<T, java.util.function.Supplier<O>, I, O> {
+		Supplier(T target, java.util.function.Supplier<O> t) {
 			super(target, t);
 		}
 
@@ -97,9 +130,37 @@ public abstract class CommandWrapper<T, I, O>  implements Component {
 		}
 	}
 	
-	static class Runnable<I, O> extends CommandWrapper<java.lang.Runnable, I, O> {
+	static class Predicate<T, I, O> extends CommandWrapper<T, java.util.function.Predicate<I>, I, O> {
 
-		Runnable(Object target, java.lang.Runnable t) {
+		Predicate(T target, java.util.function.Predicate<I> t) {
+			super(target, t);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public O executeOn(I data) {
+			command.test(data);
+			return (O)data;
+		}
+	}
+	
+	static class BiPredicate<T, I, O> extends CommandWrapper<T, java.util.function.BiPredicate<T, I>, I, O> {
+
+		BiPredicate(T target, java.util.function.BiPredicate<T, I> t) {
+			super(target, t);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public O executeOn(I data) {
+			command.test(target, data);
+			return (O)data;
+		}
+	}
+	
+	static class Runnable<T, I, O> extends CommandWrapper<T, java.lang.Runnable, I, O> {
+
+		Runnable(T target, java.lang.Runnable t) {
 			super(target, t);
 		}
 

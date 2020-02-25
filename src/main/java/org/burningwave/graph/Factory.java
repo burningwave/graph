@@ -203,7 +203,7 @@ public class Factory implements Component {
 			Factory.class.getPackage().getName() + "." + 
 			Virtual.class.getSimpleName().toLowerCase() + "." +
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
-		Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces));
+		Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
 			return (T)componentSupplier.getMemberFinder().findOne(
 				MethodCriteria.on(cls).name(
@@ -287,7 +287,7 @@ public class Factory implements Component {
 				);
 				
 				Object functionalInterface = componentSupplier.getFunctionalInterfaceFactory().create(
-					instance, Objects.requireNonNull(
+					Objects.requireNonNull(
 						mth, "Could not bind function " + instance.getClass().getName() + "::" + mth.getName() + " to any Wrapper"
 					)
 				);

@@ -51,7 +51,7 @@ import org.burningwave.core.iterable.IterableObjectHelper;
 import org.burningwave.core.reflection.PropertyAccessor;
 
 
-public class Functions extends Group<CommandWrapper<?, Context, Context>> {
+public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 	protected Map<String, Directive> onException;
 		
 	Functions() {
@@ -79,7 +79,7 @@ public class Functions extends Group<CommandWrapper<?, Context, Context>> {
 	public void executeOn(Object object) {
 		Context context = (Context)object;
 		logDebug("Start executing functions group {}", getName());
-		for (CommandWrapper<?, Context, Context> functionWrapper : elements) {
+		for (CommandWrapper<?, ?, Context, Context> functionWrapper : elements) {
 			try {
 				context = functionWrapper.executeOn(context);
 			} catch (Throwable exc) {
@@ -429,7 +429,7 @@ public class Functions extends Group<CommandWrapper<?, Context, Context>> {
 	@Override
 	public void close() {
 		if (elements != null) {
-			for (CommandWrapper<?, Context, Context> functionWrapper : elements) {
+			for (CommandWrapper<?, ?, Context, Context> functionWrapper : elements) {
 				if (functionWrapper.getTarget() instanceof Functions) {
 					((Functions)functionWrapper.getTarget()).close();
 				}
