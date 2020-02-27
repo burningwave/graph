@@ -28,6 +28,10 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentsContainer.MemberFinder;
+import static org.burningwave.core.assembler.StaticComponentsContainer.Strings;
+import static org.burningwave.core.assembler.StaticComponentsContainer.Throwables;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -42,16 +46,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.burningwave.graph.ControllableContext.Directive;
-
-import org.burningwave.Throwables;
 import org.burningwave.core.Component;
-import org.burningwave.core.Strings;
 import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
 import org.burningwave.core.classes.MethodCriteria;
 import org.burningwave.core.extension.CommandWrapper;
+import org.burningwave.graph.ControllableContext.Directive;
 
 
 public class Factory implements Component {
@@ -64,7 +65,6 @@ public class Factory implements Component {
 		this.componentSupplier = componentSupplier;
 		codeGeneratorForContext = componentSupplier.getOrCreate(CodeGeneratorForContext.class, () -> 
 			CodeGeneratorForContext.create(
-				componentSupplier.getMemberFinder(),
 				componentSupplier.getStreamHelper()
 			)
 		);
@@ -117,7 +117,7 @@ public class Factory implements Component {
 			beanClassNameOrContextName = beanClassNameOrContextName.split("#")[1];
 			instance = ((Map<?, ?>) beanContainer).get(beanClassNameOrContextName);
 		} else if (Class.forName("org.springframework.context.ApplicationContext").isInstance(beanContainer)) {
-			instance = componentSupplier.getMemberFinder().findOne(
+			instance = MemberFinder.findOne(
 				MethodCriteria.forName(
 					methodName -> methodName.matches("getBean")
 				).and().returnType(
@@ -205,7 +205,7 @@ public class Factory implements Component {
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
 		Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
-			return (T)componentSupplier.getMemberFinder().findOne(
+			return (T)MemberFinder.findOne(
 				MethodCriteria.on(cls).name(
 					"create"::equals
 				).and().parameterTypes(
@@ -263,7 +263,7 @@ public class Factory implements Component {
 				Objects.requireNonNull(instance, "Object " + innerConfig.getMethod() + " not found");
 				final String methodName = methodNameWrapper.get();
 				Method mth = Optional.ofNullable(
-					componentSupplier.getMemberFinder().findOne(
+					MemberFinder.findOne(
 						MethodCriteria.byScanUpTo(c ->
 							c.getName().equals(superClassWrapper.get().getName())
 						).and().name(
@@ -274,7 +274,7 @@ public class Factory implements Component {
 						instance
 					)
 				).orElse(
-					componentSupplier.getMemberFinder().findOne(
+					MemberFinder.findOne(
 						MethodCriteria.byScanUpTo(c ->
 							c.getName().equals(superClassWrapper.get().getName())
 						).and().name(

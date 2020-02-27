@@ -43,7 +43,7 @@ import java.util.stream.Stream;
 
 import org.burningwave.graph.ControllableContext.Directive;
 
-import org.burningwave.Throwables;
+import static org.burningwave.core.assembler.StaticComponentsContainer.Throwables;
 import org.burningwave.core.Component;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.core.extension.Group;

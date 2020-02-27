@@ -28,22 +28,22 @@
  */
 package org.burningwave.graph;
 
-import org.burningwave.core.Strings;
+import static org.burningwave.core.assembler.StaticComponentsContainer.Strings;
+
 import org.burningwave.core.classes.CodeGenerator;
-import org.burningwave.core.classes.MemberFinder;
 import org.burningwave.core.io.StreamHelper;
 
 public class CodeGeneratorForContext extends CodeGenerator.ForPojo {
 	private CodeGeneratorForContext(
-			MemberFinder memberFinder,
-			StreamHelper streamHelper) {
-		super(memberFinder, streamHelper);
+		StreamHelper streamHelper
+	) {
+		super(streamHelper);
 	}
 	
 	public static CodeGeneratorForContext create(
-			MemberFinder memberFinder,
-			StreamHelper streamHelper) {
-		return new CodeGeneratorForContext(memberFinder, streamHelper);
+		StreamHelper streamHelper
+	) {
+		return new CodeGeneratorForContext(streamHelper);
 	}
 	
 	
