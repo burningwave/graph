@@ -23,10 +23,10 @@
 			"functions": [
 				{
 					"name" : "thirdLevelGroup[0]",
-					"method": "com.github.burningwave.graph.service.ServiceOne::staticLoad"
+					"method": "org.burningwave.graph.service.ServiceOne::staticLoad"
 				},{
 					"name" : "thirdLevelGroup[1]",
-					"method": "new com.github.burningwave.graph.service.ServiceOne::update"
+					"method": "new org.burningwave.graph.service.ServiceOne::update"
 				}
 			]
 		},
