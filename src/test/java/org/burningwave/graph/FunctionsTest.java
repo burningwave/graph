@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.burningwave.ManagedLogger;
+import org.burningwave.core.ManagedLogger;
 import org.burningwave.graph.Config;
 import org.burningwave.graph.Context;
 import org.burningwave.graph.Factory;

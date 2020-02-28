@@ -4,7 +4,7 @@ import static org.burningwave.core.assembler.StaticComponentsContainer.ManagedLo
 
 import java.util.List;
 
-import org.burningwave.ManagedLogger;
+import org.burningwave.core.ManagedLogger;
 import org.burningwave.graph.IterableObjectSupport;
 import org.burningwave.graph.ListenableContext;
 

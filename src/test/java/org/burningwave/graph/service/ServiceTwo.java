@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import org.burningwave.ManagedLogger;
+import org.burningwave.core.ManagedLogger;
 import org.burningwave.graph.Context;
 import org.burningwave.graph.bean.Person;
 
