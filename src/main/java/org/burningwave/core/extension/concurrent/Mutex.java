@@ -1,9 +1,9 @@
 /*
- * This file is part of Burningwave Core.
+ * This file is part of Burningwave Graph.
  *
  * Author: Roberto Gentili
  *
- * Hosted at: https://github.com/burningwave/core
+ * Hosted at: https://github.com/burningwave/graph
  *
  * --
  *
