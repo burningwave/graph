@@ -53,6 +53,7 @@ import org.burningwave.core.Component;
 import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
+import org.burningwave.core.classes.ClassFactory.PojoSubTypeRetriever;
 import org.burningwave.core.classes.ClassSourceGenerator;
 import org.burningwave.core.classes.FunctionSourceGenerator;
 import org.burningwave.core.classes.MethodCriteria;
@@ -205,7 +206,7 @@ public class Factory implements Component {
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
 		List<java.lang.Class<?>> classes = new ArrayList<>(Arrays.asList(interfaces));
 		classes.add(Context.Simple.class);
-		Class<?> cls = classFactory.createPojoSubTypeRetriever().setSetterMethodsBodyBuilder(
+		Class<?> cls = classFactory.createPojoSubTypeRetriever(PojoSubTypeRetriever.SourceGenerator.createDefault().setSetterMethodsBodyBuilder(
 			(method, paramName) ->
 				method.addBodyCodeRow("put(\"" + paramName + "\", "+ paramName + ");")
 		).setGetterMethodsBodyBuilder(
@@ -225,7 +226,7 @@ public class Factory implements Component {
 			}
 		).setFieldsBuilder(
 			null
-		).getOrBuild(
+		)).getOrBuild(
 			this.getClass().getClassLoader(), className, true, true, classes.toArray(new java.lang.Class<?>[classes.size()])
 		);
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
