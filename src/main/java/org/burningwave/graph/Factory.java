@@ -28,13 +28,16 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentsContainer.Classes;
 import static org.burningwave.core.assembler.StaticComponentsContainer.MemberFinder;
 import static org.burningwave.core.assembler.StaticComponentsContainer.Strings;
 import static org.burningwave.core.assembler.StaticComponentsContainer.Throwables;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,23 +54,18 @@ import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
 import org.burningwave.core.classes.MethodCriteria;
+import org.burningwave.core.classes.source.TypeDeclaration;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.graph.ControllableContext.Directive;
 
 
 public class Factory implements Component {
 	ComponentSupplier componentSupplier;
-	CodeGeneratorForContext codeGeneratorForContext;
 	List<Functions> functionList;
 	List<Context> contextList;
 	
 	private Factory(ComponentSupplier componentSupplier) {
 		this.componentSupplier = componentSupplier;
-		codeGeneratorForContext = componentSupplier.getOrCreate(CodeGeneratorForContext.class, () -> 
-			CodeGeneratorForContext.create(
-				componentSupplier.getStreamHelper()
-			)
-		);
 		functionList = new CopyOnWriteArrayList<>();
 		contextList = new CopyOnWriteArrayList<>();
 	}
@@ -203,7 +201,32 @@ public class Factory implements Component {
 			Factory.class.getPackage().getName() + "." + 
 			Virtual.class.getSimpleName().toLowerCase() + "." +
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
-		Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
+		List<java.lang.Class<?>> classes = new ArrayList<>(Arrays.asList(interfaces));
+		classes.add(Context.Simple.class);
+		Class<?> cls = classFactory.createPojoSubTypeRetriever().setSetterMethodsBodyBuilder(
+			(method, paramName) ->
+				method.addBodyCodeRow("put(\"" + paramName + "\", "+ paramName + ");")
+		).setGetterMethodsBodyBuilder(
+			(method, paramName) ->
+				method.addBodyCodeRow("return (" + method.getReturnType().getSimpleName() + ")get(\"" + paramName + "\");")
+		).setExtraElementsBuilder(
+			(unit, superClass, interfs) -> {
+				org.burningwave.core.classes.source.Class classSource = unit.getClass(className);
+				org.burningwave.core.classes.source.Function createSimmetricCloneMethod =
+					org.burningwave.core.classes.source.Function.create("createSymmetricClone")
+					.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclaration.create(Context.class.getName()))
+					.addBodyCodeRow(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
+					.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
+					.addBodyCodeRow("data.parent = this;")
+					.addBodyCodeRow("return data;").addOuterCodeRow("@Override");
+				classSource.addMethod(createSimmetricCloneMethod);
+			}
+		).setFieldsBuilder(
+			null
+		).getOrBuild(
+			this.getClass().getClassLoader(), className, true, true, classes.toArray(new java.lang.Class<?>[classes.size()])
+		);
+		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
 			return (T)MemberFinder.findOne(
 				MethodCriteria.on(cls).name(
