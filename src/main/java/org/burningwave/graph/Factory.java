@@ -53,8 +53,10 @@ import org.burningwave.core.Component;
 import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
+import org.burningwave.core.classes.ClassSourceGenerator;
+import org.burningwave.core.classes.FunctionSourceGenerator;
 import org.burningwave.core.classes.MethodCriteria;
-import org.burningwave.core.classes.source.TypeDeclaration;
+import org.burningwave.core.classes.TypeDeclarationSourceGenerator;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.graph.ControllableContext.Directive;
 
@@ -211,10 +213,10 @@ public class Factory implements Component {
 				method.addBodyCodeRow("return (" + method.getReturnType().getSimpleName() + ")get(\"" + paramName + "\");")
 		).setExtraElementsBuilder(
 			(unit, superClass, interfs) -> {
-				org.burningwave.core.classes.source.Class classSource = unit.getClass(className);
-				org.burningwave.core.classes.source.Function createSimmetricCloneMethod =
-					org.burningwave.core.classes.source.Function.create("createSymmetricClone")
-					.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclaration.create(Context.class.getName()))
+				ClassSourceGenerator classSource = unit.getClass(className);
+				FunctionSourceGenerator createSimmetricCloneMethod =
+					FunctionSourceGenerator.create("createSymmetricClone")
+					.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclarationSourceGenerator.create(Context.class.getName()))
 					.addBodyCodeRow(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
 					.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
 					.addBodyCodeRow("data.parent = this;")
