@@ -227,7 +227,10 @@ public class Factory implements Component {
 		).setFieldsBuilder(
 			null
 		)).getOrBuild(
-			this.getClass().getClassLoader(), className, true, true, classes.toArray(new java.lang.Class<?>[classes.size()])
+			this.getClass().getClassLoader(),
+			className, 
+			(PojoSubTypeRetriever.SourceGenerator.BUILDING_METHODS_CREATION_ENABLED | PojoSubTypeRetriever.SourceGenerator.USE_OF_FULLY_QUALIFIED_CLASS_NAMES_ENABLED), 
+			classes.toArray(new java.lang.Class<?>[classes.size()])
 		);
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
