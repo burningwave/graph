@@ -4,7 +4,7 @@
 	<groupId>org.burningwave</groupId>
 	<artifactId>graph</artifactId>
 	
-	<version>0.9.42-SNAPSHOT</version>
+	<version>0.9.42</version>
 	<packaging>jar</packaging>
 	<name>Burningwave Graph</name>
 	<url>https://www.burningwave.org/</url>
@@ -246,7 +246,7 @@
 		<url>https://github.com/burningwave/graph</url>
 		<connection>scm:git:git://github.com/burningwave/graph.git</connection>
 		<developerConnection>scm:git:git@github.com:burningwave/graph.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>graph-0.9.42</tag>
 	</scm>
 
 	<profiles>
