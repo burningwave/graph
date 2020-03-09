@@ -28,6 +28,8 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +45,6 @@ import java.util.stream.Stream;
 
 import org.burningwave.graph.ControllableContext.Directive;
 
-import static org.burningwave.core.assembler.StaticComponentsContainer.Throwables;
 import org.burningwave.core.Component;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.core.extension.Group;

@@ -1,6 +1,6 @@
 package org.burningwave.graph.service;
 
-import static org.burningwave.core.assembler.StaticComponentsContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
 
 import java.util.List;
 
