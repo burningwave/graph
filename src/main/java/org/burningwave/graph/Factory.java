@@ -206,24 +206,36 @@ public class Factory implements Component {
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
 		List<java.lang.Class<?>> classes = new ArrayList<>(Arrays.asList(interfaces));
 		classes.add(Context.Simple.class);
-		Class<?> cls = classFactory.createPojoSubTypeRetriever(PojoSubTypeRetriever.SourceGenerator.createDefault().setSetterMethodsBodyBuilder(
-			(method, paramName) ->
-				method.addBodyCodeRow("put(\"" + paramName + "\", "+ paramName + ");")
-		).setGetterMethodsBodyBuilder(
-			(method, paramName) ->
-				method.addBodyCodeRow("return (" + method.getReturnType().getSimpleName() + ")get(\"" + paramName + "\");")
-		).setExtraElementsBuilder(
-			(unit, superClass, interfs) -> {
-				ClassSourceGenerator classSource = unit.getClass(className);
-				FunctionSourceGenerator createSimmetricCloneMethod =
-					FunctionSourceGenerator.create("createSymmetricClone")
-					.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclarationSourceGenerator.create(Context.class.getName()))
-					.addBodyCodeRow(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
-					.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
-					.addBodyCodeRow("data.parent = this;")
-					.addBodyCodeRow("return data;").addOuterCodeRow("@Override");
-				classSource.addMethod(createSimmetricCloneMethod);
-			}
+		PojoSubTypeRetriever.SourceGenerator pojoSourceSG = PojoSubTypeRetriever.SourceGenerator.createDefault();
+		Class<?> cls = classFactory.createPojoSubTypeRetriever(
+			pojoSourceSG.setSetterMethodsBodyBuilder(
+				(methodSG, method, options) -> {
+					String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst("set", ""));
+					methodSG.addBodyCodeRow("put(\"" + paramName + "\", "+ paramName + ");");
+				}
+			).setGetterMethodsBodyBuilder(
+				(methodSG, method, options) -> {
+					String prefix = method.getName().startsWith("get")? "get" : "is";
+					String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst(prefix, ""));
+					methodSG.addBodyCodeRow("return (" + 
+						(pojoSourceSG.isUseFullyQualifiedClassNamesEnabled(options)?
+							method.getReturnType().getName():
+							method.getReturnType().getSimpleName()
+						) + 
+					")get(\"" + paramName + "\");");
+				}
+			).setExtraElementsBuilder(
+				(unit, superClass, interfs, options) -> {
+					ClassSourceGenerator classSource = unit.getClass(className);
+					FunctionSourceGenerator createSimmetricCloneMethod =
+						FunctionSourceGenerator.create("createSymmetricClone")
+						.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclarationSourceGenerator.create(Context.class.getName()))
+						.addBodyCodeRow(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
+						.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
+						.addBodyCodeRow("data.parent = this;")
+						.addBodyCodeRow("return data;").addOuterCodeRow("@Override");
+					classSource.addMethod(createSimmetricCloneMethod);
+				}
 		).setFieldsBuilder(
 			null
 		)).getOrBuild(
