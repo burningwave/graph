@@ -53,10 +53,10 @@ import org.burningwave.core.Component;
 import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
-import org.burningwave.core.classes.ClassFactory.PojoSubTypeRetriever;
 import org.burningwave.core.classes.ClassSourceGenerator;
 import org.burningwave.core.classes.FunctionSourceGenerator;
 import org.burningwave.core.classes.MethodCriteria;
+import org.burningwave.core.classes.PojoSourceGenerator;
 import org.burningwave.core.classes.TypeDeclarationSourceGenerator;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.graph.ControllableContext.Directive;
@@ -206,7 +206,7 @@ public class Factory implements Component {
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
 		List<java.lang.Class<?>> classes = new ArrayList<>(Arrays.asList(interfaces));
 		classes.add(Context.Simple.class);
-		PojoSubTypeRetriever.SourceGenerator pojoSourceSG = PojoSubTypeRetriever.SourceGenerator.createDefault();
+		PojoSourceGenerator pojoSourceSG = PojoSourceGenerator.createDefault();
 		Class<?> cls = classFactory.createPojoSubTypeRetriever(
 			pojoSourceSG.setSetterMethodsBodyBuilder(
 				(methodSG, method, options) -> {
@@ -241,7 +241,7 @@ public class Factory implements Component {
 		)).getOrBuild(
 			this.getClass().getClassLoader(),
 			className, 
-			(PojoSubTypeRetriever.SourceGenerator.BUILDING_METHODS_CREATION_ENABLED | PojoSubTypeRetriever.SourceGenerator.USE_OF_FULLY_QUALIFIED_CLASS_NAMES_ENABLED), 
+			(PojoSourceGenerator.BUILDING_METHODS_CREATION_ENABLED | PojoSourceGenerator.USE_OF_FULLY_QUALIFIED_CLASS_NAMES_ENABLED), 
 			classes.toArray(new java.lang.Class<?>[classes.size()])
 		);
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
