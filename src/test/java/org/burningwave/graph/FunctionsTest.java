@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.burningwave.core.ManagedLogger;
-import org.burningwave.graph.Config;
-import org.burningwave.graph.Context;
-import org.burningwave.graph.Factory;
-import org.burningwave.graph.Functions;
 import org.burningwave.graph.bean.Person;
 import org.burningwave.graph.service.ServiceOne;
 import org.burningwave.graph.service.ServiceTwo;
