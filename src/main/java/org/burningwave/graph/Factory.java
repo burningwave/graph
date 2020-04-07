@@ -238,7 +238,7 @@ public class Factory implements Component {
 				}
 		).setFieldsBuilder(
 			null
-		)).getOrBuild(
+		)).buildAndLoadOrUploadTo(
 			this.getClass().getClassLoader(),
 			className, 
 			(PojoSourceGenerator.BUILDING_METHODS_CREATION_ENABLED | PojoSourceGenerator.USE_OF_FULLY_QUALIFIED_CLASS_NAMES_ENABLED), 
