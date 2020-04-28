@@ -29,7 +29,7 @@
 package org.burningwave.graph;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Classes;
-import static org.burningwave.core.assembler.StaticComponentContainer.MemberFinder;
+import static org.burningwave.core.assembler.StaticComponentContainer.Members;
 import static org.burningwave.core.assembler.StaticComponentContainer.Strings;
 import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
 
@@ -118,7 +118,7 @@ public class Factory implements Component {
 			beanClassNameOrContextName = beanClassNameOrContextName.split("#")[1];
 			instance = ((Map<?, ?>) beanContainer).get(beanClassNameOrContextName);
 		} else if (Class.forName("org.springframework.context.ApplicationContext").isInstance(beanContainer)) {
-			instance = MemberFinder.findOne(
+			instance = Members.findOne(
 				MethodCriteria.forName(
 					methodName -> methodName.matches("getBean")
 				).and().returnType(
@@ -246,7 +246,7 @@ public class Factory implements Component {
 		);
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
-			return (T)MemberFinder.findOne(
+			return (T)Members.findOne(
 				MethodCriteria.on(cls).name(
 					"create"::equals
 				).and().parameterTypes(
@@ -304,7 +304,7 @@ public class Factory implements Component {
 				Objects.requireNonNull(instance, "Object " + innerConfig.getMethod() + " not found");
 				final String methodName = methodNameWrapper.get();
 				Method mth = Optional.ofNullable(
-					MemberFinder.findOne(
+					Members.findOne(
 						MethodCriteria.byScanUpTo(c ->
 							c.getName().equals(superClassWrapper.get().getName())
 						).and().name(
@@ -315,7 +315,7 @@ public class Factory implements Component {
 						instance
 					)
 				).orElse(
-					MemberFinder.findOne(
+					Members.findOne(
 						MethodCriteria.byScanUpTo(c ->
 							c.getName().equals(superClassWrapper.get().getName())
 						).and().name(
