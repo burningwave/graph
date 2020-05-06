@@ -173,7 +173,7 @@ public class Config implements Serializable {
 		
 		public Config build(String fileName) throws JsonParseException, JsonMappingException, IOException {
 			Config config = objectMapper.readValue(
-				Files.readAllBytes(Paths.get(pathHelper.getAbsolutePath(fileName))), 
+				Files.readAllBytes(Paths.get(pathHelper.getAbsolutePathOfResource(fileName))), 
 				Config.class
 			);
 			adjustFields(config);
