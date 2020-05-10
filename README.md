@@ -1,4 +1,20 @@
-[![logo](Burningwave-logo.jpg "Burningwave")](https://www.burningwave.org/)
+Burningwave Graph
+==========
+
+<a href="https://github.com/burningwave/graph">
+<img src="https://raw.githubusercontent.com/burningwave/core/master/Burningwave-logo.jpg" alt="Burningwave-logo.jpg" height="180px" align="right"/>
+</a>
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.burningwave/graph/badge.svg#)](https://search.maven.org/artifact/org.burningwave/graph)
+
+[![Tested on Java 8](https://img.shields.io/badge/Tested%20on-Java%208-yellowgreen)](https://www.java.com/it/download/)
+[![Tested on Java 9](https://img.shields.io/badge/Tested%20on-Java%209-yellow)](https://www.oracle.com/java/technologies/javase/javase9-archive-downloads.html)
+[![Tested on Java 10](https://img.shields.io/badge/Tested%20on-Java%2010-orange)](https://www.oracle.com/java/technologies/java-archive-javase10-downloads.html)
+[![Tested on Java 11](https://img.shields.io/badge/Tested%20on-Java%2011-red)](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+
+[![Tested on Java 12](https://img.shields.io/badge/Tested%20on-Java%2012-ff69b4)](https://www.oracle.com/java/technologies/javase/jdk12-archive-downloads.html)
+[![Tested on Java 13](https://img.shields.io/badge/Tested%20on-Java%2013-blueviolet)](https://www.oracle.com/java/technologies/javase/jdk13-archive-downloads.html)
+[![Tested on Java 14](https://img.shields.io/badge/Tested%20on-Java%2014-blue)](https://www.oracle.com/java/technologies/javase-downloads.html)
 
 **Burningwave Graph** is a framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration.
 
