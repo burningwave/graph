@@ -16,7 +16,7 @@ Burningwave Graph
 [![Tested on Java 13](https://img.shields.io/badge/Tested%20on-Java%2013-blueviolet)](https://www.oracle.com/java/technologies/javase/jdk13-archive-downloads.html)
 [![Tested on Java 14](https://img.shields.io/badge/Tested%20on-Java%2014-blue)](https://www.oracle.com/java/technologies/javase-downloads.html)
 
-**Burningwave Graph** is a framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration.
+**Burningwave Graph** is a framework based on Burningwave Core library for creating graphs of synchronous/asynchronous Java method calls using a JSon configuration
 
 ## [**Ask for assistance to Burningwave community**](https://www.burningwave.org/forum/forum/how-to-do/)
 
