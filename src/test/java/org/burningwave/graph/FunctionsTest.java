@@ -41,13 +41,12 @@ public class FunctionsTest implements ManagedLogger {
 			data.setInputCollection(list);
 			
 			functions.executeOn(data);
-			logInfo("\nSuccesfully completed");
 			factory.close(functions);
 			factory.close(data);
+			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " succesfully completed");
 		} catch (Throwable exc) {
 			logError("", exc);
 		}
-		logDebug("test ended");
 	}
 	
 	
@@ -70,6 +69,7 @@ public class FunctionsTest implements ManagedLogger {
 			List<Person> persons = data.get("persons");
 			factory.close(functions);
 			assertEquals(ServiceTwo.PERSONS_COLLECTION_SIZE, persons.size());
+			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " succesfully completed");
 		} catch (Throwable exc) {
 			logError("Exception occurred", exc);
 		}
@@ -94,6 +94,7 @@ public class FunctionsTest implements ManagedLogger {
 			int total = data.get("total");
 			factory.close(functions);
 			assertEquals(ServiceTwo.PERSONS_COLLECTION_SIZE * ServiceTwo.PERSONS_COLLECTIONS_NUMBER, total);
+			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " succesfully completed");
 		} catch (Throwable exc) {
 			logError("Exception occurred", exc);
 		}
