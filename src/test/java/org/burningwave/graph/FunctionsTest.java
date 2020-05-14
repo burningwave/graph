@@ -20,6 +20,7 @@ public class FunctionsTest implements ManagedLogger {
 	@Test
 	public void testOne() {
 		try {
+			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> objs = new LinkedHashMap<>();
 			objs.put("sharedService", new ServiceOne());
 			
@@ -53,6 +54,7 @@ public class FunctionsTest implements ManagedLogger {
 	@Test
 	public void iterableFunctionsTest() {
 		try {
+			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> services = new LinkedHashMap<>();
 			services.put("service", new ServiceTwo());
 			
@@ -78,6 +80,7 @@ public class FunctionsTest implements ManagedLogger {
 	@Test
 	public void nestedIterableFunctionsTest() {
 		try {
+			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> services = new LinkedHashMap<>();
 			services.put("service", new ServiceTwo());
 			
