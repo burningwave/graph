@@ -6,8 +6,8 @@
 			"method": "#service::loadCollectionOfCollection"
 		},{
 			"name" : "itemsManager",
+			//Default value of threadsNumber is auto
 			"async": true,
-			"threadsNumber": "auto",
 			"iterableObject": "context[listOfPersonList]",
 			"loopResult": "context[outputArray]",
 			"functions": [	
