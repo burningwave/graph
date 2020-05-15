@@ -16,6 +16,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	
 	<organization>
 		<name>Burningwave</name>
 		<url>https://www.burningwave.org/</url>
@@ -37,7 +38,7 @@
 			</roles>
 		</developer>
 	</developers>
-
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- Can be changed with one of this values: 9, 10, 11, 12, 13, 14 -->
@@ -47,9 +48,32 @@
 		<project.test.includes>**/AllExceptHeavyTestsSuite.java</project.test.includes>
 		<project.test.excludes>**/*Test.java</project.test.excludes>
 		<project.generated.artifacts.prefix>bw</project.generated.artifacts.prefix>
-		<repository.url>https://burningwave@github.com/burningwave/graph.git</repository.url>
+		<repository.url>git@github.com:burningwave/graph.git</repository.url>
 	</properties>
+	
+	<issueManagement>
+        <system>github.com</system>
+        <url>https://github.com/raphw/byte-buddy/issues</url>
+    </issueManagement>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
+	<scm>
+		<connection>scm:git:${repository.url}</connection>
+		<developerConnection>scm:git:${repository.url}</developerConnection>
+		<url>${repository.url}</url>
+		<tag>HEAD</tag>
+	</scm>
+	
 	<dependencies>
 		
 		<dependency>
@@ -290,24 +314,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-
-	<scm>
-		<connection>scm:git:${repository.url}</connection>
-		<developerConnection>scm:git:${repository.url}</developerConnection>
-		<url>${repository.url}</url>
-		<tag>HEAD</tag>
-	</scm>
 
 	<profiles>
 		<!-- GPG Signature on release -->
