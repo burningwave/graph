@@ -71,7 +71,7 @@
 	<scm>
 		<connection>scm:git:${repository.url}</connection>
 		<developerConnection>scm:git:${repository.url}</developerConnection>
-		<url>${repository.url}</url>
+		<url>https://github.com/burningwave/graph</url>
 		<tag>HEAD</tag>
 	</scm>
 	
