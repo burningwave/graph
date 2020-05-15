@@ -6,7 +6,11 @@
 	
 	<version>0.9.57-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	
 	<name>Burningwave Graph</name>
+	<description>
+		A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration
+	</description>
 	<url>https://www.burningwave.org/</url>
 	
 	<licenses>
@@ -21,10 +25,6 @@
 		<name>Burningwave</name>
 		<url>https://www.burningwave.org/</url>
 	</organization>
-	
-	<description>
-		A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration
-	</description>
 	
 	<developers>
 		<developer>
@@ -41,6 +41,7 @@
 	</developers>
 	
 	<properties>
+		<copyright.holder>Roberto Gentili</copyright.holder>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- Can be changed with one of this values: 9, 10, 11, 12, 13, 14 -->
 		<project_jdk_version>8</project_jdk_version>
