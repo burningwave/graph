@@ -7,7 +7,7 @@
 		},{
 			"name" : "itemsSetter",
 			"async": true,
-			"threadsNumber": "1",
+			"threadsNumber": "3",
 			"iterableObject": "context[persons]",
 			"loopResult": "context[outputArray]",
 			"functions": [
