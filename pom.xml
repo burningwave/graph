@@ -49,7 +49,7 @@
 		<project.test.includes>**/AllExceptHeavyTestsSuite.java</project.test.includes>
 		<project.test.excludes>**/*Test.java</project.test.excludes>
 		<project.generated.artifacts.prefix>bw</project.generated.artifacts.prefix>
-		<repository.url>git@github.com:burningwave/graph.git</repository.url>
+		<repository.url>burningwave@github.com:burningwave/graph.git</repository.url>
 	</properties>
 	
 	<issueManagement>
