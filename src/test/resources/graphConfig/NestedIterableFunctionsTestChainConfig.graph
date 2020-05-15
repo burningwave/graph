@@ -19,7 +19,7 @@
 						{
 							"name" : "itemManager",
 							"async": true,
-							"threadsNumber": "auto",
+							"threadsNumber": "2",
 							"functions": [
 								{
 									"name" : "setIdOnPerson",

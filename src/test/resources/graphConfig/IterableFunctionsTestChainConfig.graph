@@ -14,7 +14,7 @@
 				{
 					"name" : "itemSetter",
 					"async": true,
-					"threadsNumber": "auto",
+					"threadsNumber": "2",
 					"functions": [
 						{
 							"name" : "setIdOnPerson",
