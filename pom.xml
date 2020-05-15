@@ -25,6 +25,7 @@
 	<description>
 		A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration
 	</description>
+	
 	<developers>
 		<developer>
 			<name>Roberto Gentili</name>
@@ -53,7 +54,7 @@
 	
 	<issueManagement>
         <system>github.com</system>
-        <url>https://github.com/raphw/byte-buddy/issues</url>
+        <url>https://github.com/burningwave/graph/issues</url>
     </issueManagement>
 	
 	<distributionManagement>
