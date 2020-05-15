@@ -6,6 +6,7 @@
 		{
 			"name" : "daemons",
 			"async": true,
+			"threadsNumber": "1",
 			"onException": [
 				{
 					"directive": "STOP_ITERATION",
@@ -34,12 +35,14 @@
 		{
 			"name" : "secondLevelGroup[1]",
 			"async": true,
+			"threadsNumber": "1",
 			"iterableObject": "context[inputCollection]",
 			"loopResult": "context[outputArray]",
 			"functions": [
 				{
 					"name" : "thirdLevelGroup[2]",
 					"async": true,
+					"threadsNumber": "1",
 					"onException": [
 						{
 							"directive": "STOP_ITERATION",

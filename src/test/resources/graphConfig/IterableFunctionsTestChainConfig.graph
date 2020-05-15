@@ -7,14 +7,14 @@
 		},{
 			"name" : "itemsSetter",
 			"async": true,
-			"threadsNumber": "2",
+			"threadsNumber": "1",
 			"iterableObject": "context[persons]",
 			"loopResult": "context[outputArray]",
 			"functions": [
 				{
 					"name" : "itemSetter",
 					"async": true,
-					"threadsNumber": "2",
+					"threadsNumber": "1",
 					"functions": [
 						{
 							"name" : "setIdOnPerson",

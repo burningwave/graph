@@ -7,6 +7,7 @@
 		},{
 			"name" : "itemsManager",
 			"async": true,
+			"threadsNumber": "auto",
 			"iterableObject": "context[listOfPersonList]",
 			"loopResult": "context[outputArray]",
 			"functions": [	
@@ -19,7 +20,7 @@
 						{
 							"name" : "itemManager",
 							"async": true,
-							"threadsNumber": "2",
+							"threadsNumber": "1",
 							"functions": [
 								{
 									"name" : "setIdOnPerson",
