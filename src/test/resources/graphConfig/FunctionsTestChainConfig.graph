@@ -1,6 +1,7 @@
 { 
 	"name" : "firstLevelGroup",
 	"async": true,
+	"threadsNumber": "auto",
 	"functions": [
 		{
 			"name" : "daemons",
