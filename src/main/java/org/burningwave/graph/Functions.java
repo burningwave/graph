@@ -65,8 +65,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 	}
 	
 	static Functions create(
-		PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-		PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+		PropertyAccessor byFieldOrByMethodPropertyAccessor,
+		PropertyAccessor byMethodOrByFieldPropertyAccessor,
 		IterableObjectHelper iterableObjectHelper
 	) {
 		return new Functions();
@@ -113,8 +113,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		protected ExecutorService executor;
 		
 		private Async(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper, ExecutorService executor
 		) {
 			super();
@@ -122,24 +122,24 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		}
 
 		public static Functions.Async create(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper
 		) {
 			return new Async(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, null);
 		}
 		
 		public static Functions.Async create(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				ExecutorService executor) {
 			return new Async(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, executor);
 		}
 		
 		public static Functions.Async create(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				int threadsNumber) {
 			return new Async(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, Executors.newFixedThreadPool(threadsNumber));
@@ -190,16 +190,16 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		}
 
 		protected static <T> Functions.ForCollection<T> create(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				AlgorithmsSupplier algorithmsSupplier) {
 			return new Functions.ForCollection<T>(algorithmsSupplier);
 		}
 
 		public static <T> Functions.ForCollection<T> create(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				String iterableObjectContextKey,
 				String loopResultContextKey) {
@@ -256,8 +256,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		
 		private static class AlgorithmsSupplier implements Component {			
 			@SuppressWarnings("unused")
-			PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor;
-			PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor;
+			PropertyAccessor byFieldOrByMethodPropertyAccessor;
+			PropertyAccessor byMethodOrByFieldPropertyAccessor;
 			IterableObjectHelper iterableObjectHelper;
 			String iterableObjectContextKey;
 			String loopResultContextKey;
@@ -299,8 +299,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			
 			
 			private AlgorithmsSupplier(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				String iterableObjectContextKey,
 				String loopResultContextKey) {
@@ -312,8 +312,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			}
 			
 			static AlgorithmsSupplier create(
-				PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-				PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+				PropertyAccessor byFieldOrByMethodPropertyAccessor,
+				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				String iterableObjectContextKey,
 				String loopResultContextKey) {
@@ -351,8 +351,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			}
 
 			public static <T> ForCollection.Async<T> create(
-					PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-					PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+					PropertyAccessor byFieldOrByMethodPropertyAccessor,
+					PropertyAccessor byMethodOrByFieldPropertyAccessor,
 					IterableObjectHelper iterableObjectHelper,
 					String iterableObjectContextKey,
 					String loopResultContextKey,
@@ -366,8 +366,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			}
 			
 			public static <T> ForCollection.Async<T> create(
-					PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-					PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+					PropertyAccessor byFieldOrByMethodPropertyAccessor,
+					PropertyAccessor byMethodOrByFieldPropertyAccessor,
 					IterableObjectHelper iterableObjectHelper, 
 					String collectionContextKey,
 					String loopResultContextKey) {
@@ -375,8 +375,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			}
 			
 			public static <T> ForCollection.Async<T> create(
-					PropertyAccessor.ByFieldOrByMethod byFieldOrByMethodPropertyAccessor,
-					PropertyAccessor.ByMethodOrByField byMethodOrByFieldPropertyAccessor,
+					PropertyAccessor byFieldOrByMethodPropertyAccessor,
+					PropertyAccessor byMethodOrByFieldPropertyAccessor,
 					IterableObjectHelper iterableObjectHelper,
 					String collectionContextKey,
 					String loopResultContextKey,

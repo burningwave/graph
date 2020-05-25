@@ -28,7 +28,10 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.ByFieldOrByMethodPropertyAccessor;
+import static org.burningwave.core.assembler.StaticComponentContainer.ByMethodOrByFieldPropertyAccessor;
 import static org.burningwave.core.assembler.StaticComponentContainer.Classes;
+import static org.burningwave.core.assembler.StaticComponentContainer.IterableObjectHelper;
 import static org.burningwave.core.assembler.StaticComponentContainer.Members;
 import static org.burningwave.core.assembler.StaticComponentContainer.Strings;
 import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
@@ -137,9 +140,9 @@ public class Factory implements Component {
 
 	Function<Config, Functions> createAsyncFunctionsForCollection() {
 		return (config) -> Functions.ForCollection.Async.create(
-			componentSupplier.getByFieldOrByMethodPropertyAccessor(),
-			componentSupplier.getByMethodOrByFieldPropertyAccessor(),
-			componentSupplier.getIterableObjectHelper(),
+			ByFieldOrByMethodPropertyAccessor,
+			ByMethodOrByFieldPropertyAccessor,
+			IterableObjectHelper,
 			config.getIterableObject(),
 			config.getLoopResult(),
 			config.getThreadsNumberAsInteger()
@@ -148,9 +151,9 @@ public class Factory implements Component {
 
 	Function<Config, Functions> createAsyncFunctionsForCollectionWithSystemManagedThreads() {
 		return (config) -> Functions.ForCollection.Async.create(
-			componentSupplier.getByFieldOrByMethodPropertyAccessor(),
-			componentSupplier.getByMethodOrByFieldPropertyAccessor(),
-			componentSupplier.getIterableObjectHelper(),
+			ByFieldOrByMethodPropertyAccessor,
+			ByMethodOrByFieldPropertyAccessor,
+			IterableObjectHelper,
 			config.getIterableObject(), config.getLoopResult()
 		);
 	}
@@ -158,35 +161,36 @@ public class Factory implements Component {
 
 	Function<Config, Functions> createFunctionsForCollection() {
 		return (config) -> Functions.ForCollection.create(
-			componentSupplier.getByFieldOrByMethodPropertyAccessor(),
-			componentSupplier.getByMethodOrByFieldPropertyAccessor(),
-			componentSupplier.getIterableObjectHelper(),
+			ByFieldOrByMethodPropertyAccessor,
+			ByMethodOrByFieldPropertyAccessor,
+			IterableObjectHelper,
 			config.getIterableObject(), config.getLoopResult());
 	}		
 	
 
 	Function<Config, Functions> createAsyncFunctions() {
 		return (config) -> Functions.Async.create(
-			componentSupplier.getByFieldOrByMethodPropertyAccessor(),
-			componentSupplier.getByMethodOrByFieldPropertyAccessor(),
-			componentSupplier.getIterableObjectHelper(),
+			ByFieldOrByMethodPropertyAccessor,
+			ByMethodOrByFieldPropertyAccessor,
+			IterableObjectHelper,
 			config.getThreadsNumberAsInteger()); 
 	}
 	
 
 	java.util.function.Supplier<Functions> createAsyncFunctionsWithSystemManagedThreads() {
 		return () -> Functions.Async.create(
-			componentSupplier.getByFieldOrByMethodPropertyAccessor(),
-			componentSupplier.getByMethodOrByFieldPropertyAccessor(),
-			componentSupplier.getIterableObjectHelper()); 
+			ByFieldOrByMethodPropertyAccessor,
+			ByMethodOrByFieldPropertyAccessor,
+			IterableObjectHelper
+		); 
 	}
 	
 
 	java.util.function.Supplier<Functions> createFunctions() {
 		return () -> Functions.create(
-			componentSupplier.getByFieldOrByMethodPropertyAccessor(),
-			componentSupplier.getByMethodOrByFieldPropertyAccessor(),
-			componentSupplier.getIterableObjectHelper()
+			ByFieldOrByMethodPropertyAccessor,
+			ByMethodOrByFieldPropertyAccessor,
+			IterableObjectHelper
 		); 
 	}
 	
