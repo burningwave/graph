@@ -37,7 +37,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.burningwave.core.Component;
-import org.burningwave.core.concurrent.ConcurrentHelper;
 import org.burningwave.core.extension.concurrent.Cycler.Runnable;
 
 public class CollectionManager<T> implements Component {
