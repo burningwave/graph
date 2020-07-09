@@ -49,7 +49,7 @@ import org.burningwave.core.Component;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.core.extension.Group;
 import org.burningwave.core.iterable.IterableObjectHelper;
-import org.burningwave.core.reflection.PropertyAccessor;
+import org.burningwave.core.classes.PropertyAccessor;
 
 
 public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {

@@ -331,7 +331,7 @@ public class Factory implements Component {
 					)
 				);
 				
-				Object functionalInterface = componentSupplier.getFunctionalInterfaceFactory().create(
+				Object functionalInterface = componentSupplier.getFunctionalInterfaceFactory().getOrCreate(
 					Objects.requireNonNull(
 						mth, "Could not bind function " + instance.getClass().getName() + "::" + mth.getName() + " to any Wrapper"
 					)
