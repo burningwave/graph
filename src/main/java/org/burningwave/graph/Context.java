@@ -36,15 +36,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.burningwave.core.Cleanable;
 import org.burningwave.core.Component;
 import org.burningwave.core.extension.concurrent.Mutex;
 
+
+@SuppressWarnings("unchecked")
 public interface Context extends 
 	Component, 
 	IterableObjectSupport, 
 	ControllableContext,
 	ListenableContext,
-	Clearable, 
+	Cleanable, 
 	Serializable {
 	
 	static enum Operation {
@@ -120,7 +123,7 @@ public interface Context extends
 			return this.index;
 		}
 
-		@SuppressWarnings("unchecked")
+		
 		<K> K getKey() {
 			return (K)currentIteratedObjectKey;
 		}
@@ -181,7 +184,7 @@ public interface Context extends
 		abstract Context putAllDirectives(Map<String, Directive> directives);	
 		
 		@Override
-		@SuppressWarnings("unchecked")
+		
 		public <T> T get(Object key) {
 			try {
 				return (T)container.get(key);
@@ -189,19 +192,19 @@ public interface Context extends
 			return null;
 		}		
 		
-		@SuppressWarnings("unchecked")
+		
 		<T> IterationContext<T> removeIterationContext() {
 			IterationContext<T> itrCnt = (IterationContext<T>)iterationContext;
 			setCurrentIterationContext(null);
 			return itrCnt;
 		}
 		
-		@SuppressWarnings("unchecked")
+		
 		void setCurrentIterationContext(IterationContext<?> itrCnt) {
 			iterationContext = (IterationContext<Object>)itrCnt;
 		}
 		
-		@SuppressWarnings("unchecked")
+		
 		<T> IterationContext<T> getCurrentIteratedContainer() {
 			return (IterationContext<T>)iterationContext;
 		}
@@ -239,7 +242,7 @@ public interface Context extends
 		}
 		
 		@Override
-		@SuppressWarnings("unchecked")
+		
 		public <T> T getCurrentIteratedObject() {
 			return (T)Optional.ofNullable(iterationContext)
 					.map((iterationContext) -> iterationContext.getCurrentIteratedObject()).orElse(null);
@@ -258,7 +261,7 @@ public interface Context extends
 			
 
 		@Override
-		@SuppressWarnings("unchecked")
+		
 		public <T> T getCurrentIterationResult() {
 			return (T)Optional.ofNullable(iterationContext)
 				.map((iterationContext) -> iterationContext.getCurrentIterationResult()).orElse(null);
@@ -268,13 +271,13 @@ public interface Context extends
 			return ((Context.Abst)context);
 		}
 
-		
 		@Override
-		public void clear() {
+		public <C extends Cleanable> C clear() {
 			clearContainer();
 			mutexManager.clearMutexes();
 			executionDirectiveForGroupName.clear();
 			iterationContext = null;
+			return (C)this;
 		}
 	
 
@@ -380,7 +383,7 @@ public interface Context extends
 			}
 		}
 
-		@SuppressWarnings("unchecked")
+		
 		@Override
 		public <V> V waitForPut(Object key, Predicate<V> predicate, int... timeout) throws InterruptedException {
 			return (V)mutexManager.waitFor(Operation.PUT, (Object)key, (Predicate<Object>)predicate);
@@ -388,7 +391,7 @@ public interface Context extends
 
 
 		@Override
-		@SuppressWarnings("unchecked")
+		
 		public <V> V waitForRemove(Object key, Predicate<V> predicate, int... timeout) throws InterruptedException {
 			return (V)mutexManager.waitFor(Operation.REMOVE, (Object)key, (Predicate<Object>)predicate);
 		}
