@@ -121,6 +121,7 @@ public class Factory implements Component {
 			beanClassNameOrContextName = beanClassNameOrContextName.split("#")[1];
 			instance = ((Map<?, ?>) beanContainer).get(beanClassNameOrContextName);
 		} else if (Class.forName("org.springframework.context.ApplicationContext").isInstance(beanContainer)) {
+			Class<?> targetClass = (beanContainer != null ? beanContainer instanceof Class? (Class<?>)beanContainer : beanContainer.getClass() : null); 
 			instance = Members.findOne(
 				MethodCriteria.forName(
 					methodName -> methodName.matches("getBean")
@@ -131,7 +132,7 @@ public class Factory implements Component {
 				).and().parameterType(
 					(parameterTypes, idx) -> idx == 0 && parameterTypes[idx] == String.class
 				),
-				beanContainer
+				targetClass
 			).invoke(beanContainer, beanClassNameOrContextName.split("#")[1]);
 		}
 		
@@ -307,6 +308,7 @@ public class Factory implements Component {
 				}
 				Objects.requireNonNull(instance, "Object " + innerConfig.getMethod() + " not found");
 				final String methodName = methodNameWrapper.get();
+				Class<?> targetClass = (instance != null ? instance instanceof Class? (Class<?>)instance : instance.getClass() : null); 
 				Method mth = Optional.ofNullable(
 					Members.findOne(
 						MethodCriteria.byScanUpTo(c ->
@@ -316,7 +318,7 @@ public class Factory implements Component {
 						).and().parameterTypes((parameterTypes) ->
 							parameterTypes.length == 1
 						),
-						instance
+						targetClass
 					)
 				).orElse(
 					Members.findOne(
@@ -327,7 +329,7 @@ public class Factory implements Component {
 						).and().parameterTypes((parameterTypes) ->
 							parameterTypes.length == 0
 						),
-						instance
+						targetClass
 					)
 				);
 				
