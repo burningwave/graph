@@ -39,7 +39,7 @@ public class ServiceOne implements ManagedLogger {
 		if (obj != null) {
 			idx = ctx.getInputCollection().indexOf(obj);
 		}
-		ManagedLoggersRepository.logInfo(ServiceOne.class, "LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
+		ManagedLoggersRepository.logInfo("LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
 		return ctx;
 	}
 	
