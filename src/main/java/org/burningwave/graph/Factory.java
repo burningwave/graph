@@ -216,13 +216,13 @@ public class Factory implements Component {
 			pojoSourceSG.setSetterMethodsBodyBuilder(
 				(methodSG, method, options) -> {
 					String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst("set", ""));
-					methodSG.addBodyCodeRow("put(\"" + paramName + "\", "+ paramName + ");");
+					methodSG.addBodyCodeLine("put(\"" + paramName + "\", "+ paramName + ");");
 				}
 			).setGetterMethodsBodyBuilder(
 				(methodSG, method, options) -> {
 					String prefix = method.getName().startsWith("get")? "get" : "is";
 					String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst(prefix, ""));
-					methodSG.addBodyCodeRow("return (" + 
+					methodSG.addBodyCodeLine("return (" + 
 						(pojoSourceSG.isUseFullyQualifiedClassNamesEnabled(options)?
 							method.getReturnType().getName():
 							method.getReturnType().getSimpleName()
@@ -235,10 +235,10 @@ public class Factory implements Component {
 					FunctionSourceGenerator createSimmetricCloneMethod =
 						FunctionSourceGenerator.create("createSymmetricClone")
 						.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclarationSourceGenerator.create(Context.class.getName()))
-						.addBodyCodeRow(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
+						.addBodyCodeLine(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
 						.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
-						.addBodyCodeRow("data.parent = this;")
-						.addBodyCodeRow("return data;").addOuterCodeRow("@Override");
+						.addBodyCodeLine("data.parent = this;")
+						.addBodyCodeLine("return data;").addOuterCodeLine("@Override");
 					classSource.addMethod(createSimmetricCloneMethod);
 				}
 		).setFieldsBuilder(
