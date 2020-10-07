@@ -243,7 +243,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			try {
 				clonedContext.close();
 			} catch (Exception exc) {
-				throw Throwables.toRuntimeException(exc);
+				Throwables.throwException(exc);
 			}
 		}
 		

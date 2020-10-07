@@ -183,7 +183,7 @@ public class Config implements Serializable {
 				violations.forEach(violation ->
 					messages.append(violation.getMessage() + "\n")
 				);
-				throw Throwables.toRuntimeException(messages.toString());
+				Throwables.throwException(messages.toString());
 			}
 			return config;
 		}

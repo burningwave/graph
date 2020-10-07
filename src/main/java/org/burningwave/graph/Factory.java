@@ -260,7 +260,7 @@ public class Factory implements Component {
 				cls
 			).invoke(null);
 		} catch (Exception exc) {
-			throw Throwables.toRuntimeException(exc);
+			return Throwables.throwException(exc);
 		}
 	}
 	
