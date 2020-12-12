@@ -89,7 +89,7 @@ public class Factory implements Component {
 	}
 	
 	List<Directive> getAllDirectives() {
-		List<Directive> directives = new ArrayList<Directive>();
+		List<Directive> directives = new ArrayList<>();
 		directives.addAll(
 			Stream.of(Directive.Functions.values()).collect(Collectors.toList()));
 		directives.addAll(
@@ -123,7 +123,7 @@ public class Factory implements Component {
 		} else if (Class.forName("org.springframework.context.ApplicationContext").isInstance(beanContainer)) {
 			Class<?> targetClass = (beanContainer != null ? beanContainer instanceof Class? (Class<?>)beanContainer : beanContainer.getClass() : null); 
 			instance = Members.findOne(
-				MethodCriteria.forName(
+				MethodCriteria.forEntireClassHierarchy().name(
 					methodName -> methodName.matches("getBean")
 				).and().returnType(
 					returnType -> returnType == Object.class
@@ -252,7 +252,7 @@ public class Factory implements Component {
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
 			return (T)Members.findOne(
-				MethodCriteria.on(cls).name(
+				MethodCriteria.forEntireClassHierarchy().name(
 					"create"::equals
 				).and().parameterTypes(
 					paramsType -> paramsType.length == 0
@@ -387,6 +387,7 @@ public class Factory implements Component {
 		}				
 	}
 	
+	@Override
 	public void close() {
 		if (functionList != null) {
 			for (Functions function : functionList) {
