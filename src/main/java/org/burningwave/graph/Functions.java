@@ -28,6 +28,7 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
 import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
 
 import java.util.LinkedHashMap;
@@ -43,13 +44,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import org.burningwave.graph.ControllableContext.Directive;
-
 import org.burningwave.core.Component;
+import org.burningwave.core.classes.PropertyAccessor;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.core.extension.Group;
 import org.burningwave.core.iterable.IterableObjectHelper;
-import org.burningwave.core.classes.PropertyAccessor;
+import org.burningwave.graph.ControllableContext.Directive;
 
 
 public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
@@ -79,21 +79,21 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 	
 	public void executeOn(Object object) {
 		Context context = (Context)object;
-		logDebug("Start executing functions group {}", getName());
+		ManagedLoggersRepository.logDebug(getClass()::getName, "Start executing functions group {}", getName());
 		for (CommandWrapper<?, ?, Context, Context> functionWrapper : elements) {
 			try {
 				context = functionWrapper.executeOn(context);
 			} catch (Throwable exc) {
-				logError("Exception occurred", exc);
+				ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
 				castContext(context).putAllDirectives(onException);					
 			}
 			if (context.containsOneOf(getName(), Directive.Functions.STOP_PROCESSING)) {
 				context.removeDirective(getName(), Directive.Functions.STOP_PROCESSING);
-				logDebug("Stopping processing functions group {}", Optional.ofNullable(getName()).orElse(""));
+				ManagedLoggersRepository.logDebug(getClass()::getName, "Stopping processing functions group {}", Optional.ofNullable(getName()).orElse(""));
 				break;
 			}
 		}
-		logDebug("End executing functions group {}", getName());
+		ManagedLoggersRepository.logDebug(getClass()::getName, "End executing functions group {}", getName());
 	}
 
 	protected Function<Throwable, Void> getExceptionHandlingFunction(Context context) {
@@ -194,7 +194,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				AlgorithmsSupplier algorithmsSupplier) {
-			return new Functions.ForCollection<T>(algorithmsSupplier);
+			return new Functions.ForCollection<>(algorithmsSupplier);
 		}
 
 		public static <T> Functions.ForCollection<T> create(
@@ -347,7 +347,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			protected static <T> ForCollection.Async<T> create(
 					AlgorithmsSupplier algorithmsSupplier,
 					ExecutorService executor) {
-				return new ForCollection.Async<T>(algorithmsSupplier, executor);
+				return new ForCollection.Async<>(algorithmsSupplier, executor);
 			}
 
 			public static <T> ForCollection.Async<T> create(

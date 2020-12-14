@@ -29,8 +29,9 @@
 package org.burningwave.core.extension;
 
 import org.burningwave.core.Component;
+import org.burningwave.core.ManagedLogger;
 
-public abstract class Item implements Component {
+public abstract class Item implements Component, ManagedLogger {
 	protected String name;
 	protected Item parent;
 	

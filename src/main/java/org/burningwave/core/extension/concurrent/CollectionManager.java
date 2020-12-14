@@ -28,6 +28,8 @@
  */
 package org.burningwave.core.extension.concurrent;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class CollectionManager<T> implements Component {
 	
 	
 	public static <T> CollectionManager<T> create(ConcurrentHelper concurrentHelper, String threadsGroupName, int threadsNumber, int threadPriority, long waitInterval) {
-		return new CollectionManager<T>(concurrentHelper, threadsGroupName, threadsNumber, threadPriority, waitInterval);
+		return new CollectionManager<>(concurrentHelper, threadsGroupName, threadsNumber, threadPriority, waitInterval);
 	}
 
 	public void start() {
@@ -79,7 +81,7 @@ public class CollectionManager<T> implements Component {
 									if (cLW.isUseless()) {
 										cL.clear();
 										collectionWrapper.remove(cL);
-										logDebug("cleaned");
+										ManagedLoggersRepository.logDebug(getClass()::getName, "cleaned");
 									} else if (!concurrentHelper.removeAllTerminated((Collection<CompletableFuture<?>>) cLW.getCollection())){
 										concurrentHelper.waitFor(waitInterval);
 									}
@@ -110,7 +112,7 @@ public class CollectionManager<T> implements Component {
 			if (!collectionWrapper.containsKey(coll)) {
 				synchronized(this) {
 					if (!collectionWrapper.containsKey(coll)) {
-						collectionWrapper.put(coll, new CollectionWrapper<T>(coll));
+						collectionWrapper.put(coll, new CollectionWrapper<>(coll));
 					}
 				}
 			}
@@ -150,7 +152,7 @@ public class CollectionManager<T> implements Component {
 		try {
 			finalize();
 		} catch (Throwable exc) {
-			logError("Exception occurred", exc);
+			ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
 		}
 	}
 	
@@ -165,7 +167,7 @@ public class CollectionManager<T> implements Component {
 					thr.terminate();
 					thr.join();
 				} catch (InterruptedException exc) {
-					logError("Exception occurred", exc);
+					ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
 				}
 			});
 			threadList.clear();

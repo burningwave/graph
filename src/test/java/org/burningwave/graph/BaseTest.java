@@ -13,13 +13,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.burningwave.core.Component;
+import org.burningwave.core.ManagedLogger;
 import org.burningwave.core.assembler.ComponentContainer;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.function.ThrowingSupplier;
 
-public class BaseTest implements Component {
+public class BaseTest implements ManagedLogger {
 
 	Collection<ComponentSupplier> componentSuppliers = new CopyOnWriteArrayList<>();
 	
@@ -34,6 +34,7 @@ public class BaseTest implements Component {
 		List<Thread> threadList = new CopyOnWriteArrayList<>();
 		for (int i = 0; i < 1000; i++) {
 			Thread thread = new Thread() {
+				@Override
 				public void run() {
 					componentSuppliers.add(ComponentSupplier.getInstance());
 				};

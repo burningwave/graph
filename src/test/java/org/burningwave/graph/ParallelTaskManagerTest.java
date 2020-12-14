@@ -4,7 +4,7 @@ package org.burningwave.graph;
 import org.burningwave.core.extension.concurrent.ParallelTasksManager;
 import org.junit.jupiter.api.Test;
 
-public class ParallelTaskManagerTest extends BaseTest{
+public class ParallelTaskManagerTest extends BaseTest {
 	
 	@Test
 	public void addAndWaitTest() {
