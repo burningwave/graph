@@ -24,7 +24,7 @@ To include Burningwave Graph library in your projects simply use with **Apache M
 <dependency>
     <groupId>org.burningwave</groupId>
     <artifactId>graph</artifactId>
-    <version>0.10.1</version>
+    <version>0.10.2</version>
 </dependency>
 ```
 
