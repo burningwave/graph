@@ -56,11 +56,12 @@ import org.burningwave.core.Component;
 import org.burningwave.core.Virtual;
 import org.burningwave.core.assembler.ComponentSupplier;
 import org.burningwave.core.classes.ClassFactory;
-import org.burningwave.core.classes.ClassSourceGenerator;
 import org.burningwave.core.classes.FunctionSourceGenerator;
+import org.burningwave.core.classes.LoadOrBuildAndDefineConfig;
 import org.burningwave.core.classes.MethodCriteria;
 import org.burningwave.core.classes.PojoSourceGenerator;
 import org.burningwave.core.classes.TypeDeclarationSourceGenerator;
+import org.burningwave.core.classes.UnitSourceGenerator;
 import org.burningwave.core.extension.CommandWrapper;
 import org.burningwave.graph.ControllableContext.Directive;
 
@@ -211,44 +212,46 @@ public class Factory implements Component {
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
 		List<java.lang.Class<?>> classes = new ArrayList<>(Arrays.asList(interfaces));
 		classes.add(Context.Simple.class);
-		PojoSourceGenerator pojoSourceSG = PojoSourceGenerator.createDefault();
-		Class<?> cls = classFactory.createPojoSubTypeRetriever(
-			pojoSourceSG.setSetterMethodsBodyBuilder(
-				(methodSG, method, options) -> {
-					String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst("set", ""));
-					methodSG.addBodyCodeLine("put(\"" + paramName + "\", "+ paramName + ");");
-				}
-			).setGetterMethodsBodyBuilder(
-				(methodSG, method, options) -> {
-					String prefix = method.getName().startsWith("get")? "get" : "is";
-					String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst(prefix, ""));
-					methodSG.addBodyCodeLine("return (" + 
-						(pojoSourceSG.isUseFullyQualifiedClassNamesEnabled(options)?
-							method.getReturnType().getName():
-							method.getReturnType().getSimpleName()
-						) + 
-					")get(\"" + paramName + "\");");
-				}
-			).setExtraElementsBuilder(
-				(unit, superClass, interfs, options) -> {
-					ClassSourceGenerator classSource = unit.getClass(className);
-					FunctionSourceGenerator createSimmetricCloneMethod =
-						FunctionSourceGenerator.create("createSymmetricClone")
-						.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclarationSourceGenerator.create(Context.class.getName()))
-						.addBodyCodeLine(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
-						.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
-						.addBodyCodeLine("data.parent = this;")
-						.addBodyCodeLine("return data;").addOuterCodeLine("@Override");
-					classSource.addMethod(createSimmetricCloneMethod);
-				}
-		).setFieldsBuilder(
-			null
-		)).loadOrBuildAndDefine(
-			this.getClass().getClassLoader(),
-			className, 
-			(PojoSourceGenerator.BUILDING_METHODS_CREATION_ENABLED | PojoSourceGenerator.USE_OF_FULLY_QUALIFIED_CLASS_NAMES_ENABLED), 
-			classes.toArray(new java.lang.Class<?>[classes.size()])
-		);
+		Class<?> cls = classFactory.loadOrBuildAndDefine(
+			LoadOrBuildAndDefineConfig.forUnitSourceGenerator(
+				UnitSourceGenerator.create(Classes.retrievePackageName(className)).addClass(
+					PojoSourceGenerator.create().setSetterMethodsBodyBuilder(
+						(pSG, clSG, methodSG, method, options) -> {
+							String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst("set", ""));
+							methodSG.addBodyCodeLine("put(\"" + paramName + "\", "+ paramName + ");");
+						}
+					).setGetterMethodsBodyBuilder(
+						(pSG, clSG, methodSG, method, options) -> {
+							String prefix = method.getName().startsWith("get")? "get" : "is";
+							String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst(prefix, ""));
+							methodSG.addBodyCodeLine("return (" + 
+								(pSG.isUseFullyQualifiedClassNamesEnabled(options)?
+									method.getReturnType().getName():
+									method.getReturnType().getSimpleName()
+								) + 
+							")get(\"" + paramName + "\");");
+						}
+					).setExtraElementsBuilder(
+						(pSG, clSG, superClass, interfs, options) -> {
+							FunctionSourceGenerator createSimmetricCloneMethod =
+								FunctionSourceGenerator.create("createSymmetricClone")
+								.addModifier(Modifier.PUBLIC).setReturnType(TypeDeclarationSourceGenerator.create(Context.class.getName()))
+								.addBodyCodeLine(Classes.retrieveSimpleName(className)).addBodyCode("data = new")
+								.addBodyCode(Classes.retrieveSimpleName(className)).addBodyCode("(container, executionDirectiveForGroupName, mutexManager);")
+								.addBodyCodeLine("data.parent = this;")
+								.addBodyCodeLine("return data;").addOuterCodeLine("@Override");
+							clSG.addMethod(createSimmetricCloneMethod);
+						}
+					).setFieldsBuilder(
+						null
+					).generate(
+						className,
+						PojoSourceGenerator.BUILDING_METHODS_CREATION_ENABLED | PojoSourceGenerator.USE_OF_FULLY_QUALIFIED_CLASS_NAMES_ENABLED,
+						classes.toArray(new java.lang.Class<?>[classes.size()])
+					)
+				)
+			).useClassLoader(this.getClass().getClassLoader())
+		).get(className);
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
 			return (T)Members.findOne(
