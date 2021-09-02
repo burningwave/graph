@@ -17,7 +17,7 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 
 **Burningwave Graph** is a framework based on [**Burningwave Core**](https://github.com/burningwave/core#burningwave-core-) library for creating graphs of synchronous/asynchronous Java method calls using a JSon configuration
 
-To include Burningwave Graph library in your projects simply use with **Apache Maven**:
+To include Burningwave Graph in your projects simply use with **Apache Maven**:
 
 ```xml
 <dependency>
