@@ -15,7 +15,7 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 
 [![ArtifactDownload](https://www.burningwave.org/generators/generate-burningwave-artifact-downloads-badge.php?type=svg&artifactId=graph)](https://www.burningwave.org/artifact-downloads/?show-monthly-trend-chart=false)
 
-**Burningwave Graph** is a framework based on [**Burningwave Core**](https://github.com/burningwave/core#burningwave-core-) library for creating graphs of synchronous/asynchronous Java method calls using a JSon configuration
+**Burningwave Graph** is a framework based on [**Burningwave Core**](https://burningwave.github.io/core/) library for creating graphs of synchronous/asynchronous Java method calls using a JSon configuration
 
 To include Burningwave Graph in your projects simply use with **Apache Maven**:
 
