@@ -6,7 +6,8 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 </a>
 
 [![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.burningwave/graph/0)](https://maven-badges.herokuapp.com/maven-central/org.burningwave/graph/)
-[![GitHub](https://img.shields.io/github/license/burningwave/tools)](https://github.com/burningwave/graph/blob/master/LICENSE)
+[![GitHub open issues](https://img.shields.io/github/issues/burningwave/graph)](https://github.com/burningwave/graph/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/burningwave/graph)](https://github.com/burningwave/graph/issues?q=is%3Aissue+is%3Aclosed)
 
 [![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209%2C%2010%2C%2011%2C%2012%2C%2013%2C%2014%2C%2015%2C%2016%2C%2017-blueviolet)](https://github.com/burningwave/graph/actions/runs/525838775)
 
