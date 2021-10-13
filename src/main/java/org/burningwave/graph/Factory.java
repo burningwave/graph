@@ -31,10 +31,10 @@ package org.burningwave.graph;
 import static org.burningwave.core.assembler.StaticComponentContainer.ByFieldOrByMethodPropertyAccessor;
 import static org.burningwave.core.assembler.StaticComponentContainer.ByMethodOrByFieldPropertyAccessor;
 import static org.burningwave.core.assembler.StaticComponentContainer.Classes;
+import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.IterableObjectHelper;
 import static org.burningwave.core.assembler.StaticComponentContainer.Members;
 import static org.burningwave.core.assembler.StaticComponentContainer.Strings;
-import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -263,7 +263,7 @@ public class Factory implements Component {
 				cls
 			).invoke(null);
 		} catch (Exception exc) {
-			return Throwables.throwException(exc);
+			return Driver.throwException(exc);
 		}
 	}
 	

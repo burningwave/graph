@@ -28,8 +28,8 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
-import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -243,7 +243,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			try {
 				clonedContext.close();
 			} catch (Exception exc) {
-				Throwables.throwException(exc);
+				Driver.throwException(exc);
 			}
 		}
 		

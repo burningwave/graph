@@ -28,8 +28,8 @@
  */
 package org.burningwave.graph;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.Strings;
-import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -40,15 +40,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.burningwave.core.Component;
+import org.burningwave.core.Strings;
+import org.burningwave.core.assembler.ComponentSupplier;
+import org.burningwave.core.io.PathHelper;
 import org.burningwave.graph.Config.Constraint.Violation;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.burningwave.core.Component;
-import org.burningwave.core.Strings;
-import org.burningwave.core.assembler.ComponentSupplier;
-import org.burningwave.core.io.PathHelper;
 
 
 public class Config implements Serializable {
@@ -183,7 +183,7 @@ public class Config implements Serializable {
 				violations.forEach(violation ->
 					messages.append(violation.getMessage() + "\n")
 				);
-				Throwables.throwException(messages.toString());
+				Driver.throwException(messages.toString());
 			}
 			return config;
 		}
