@@ -23,7 +23,7 @@ To include Burningwave Graph in your projects simply use with **Apache Maven**:
 <dependency>
     <groupId>org.burningwave</groupId>
     <artifactId>graph</artifactId>
-    <version>0.10.5</version>
+    <version>0.10.9</version>
 </dependency>
 ```
 
