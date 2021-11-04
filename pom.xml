@@ -32,7 +32,7 @@
 	<groupId>org.burningwave</groupId>
 	<artifactId>graph</artifactId>
 	
-	<version>0.10.30</version>
+	<version>0.10.31-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>Burningwave Graph</name>
@@ -101,7 +101,7 @@
 		<connection>scm:git:${repository.url}</connection>
 		<developerConnection>scm:git:${repository.url}</developerConnection>
 		<url>https://github.com/burningwave/graph</url>
-		<tag>graph-0.10.30</tag>
+		<tag>HEAD</tag>
 	</scm>
 	
 	<dependencies>
