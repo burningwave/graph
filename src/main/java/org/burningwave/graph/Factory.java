@@ -70,25 +70,25 @@ public class Factory implements Component {
 	ComponentSupplier componentSupplier;
 	List<Functions> functionList;
 	List<Context> contextList;
-	
+
 	private Factory(ComponentSupplier componentSupplier) {
 		this.componentSupplier = componentSupplier;
 		functionList = new CopyOnWriteArrayList<>();
 		contextList = new CopyOnWriteArrayList<>();
 	}
-	
+
 	public static Factory create(ComponentSupplier componentSupplier) {
 		return new Factory(componentSupplier);
 	}
-	
+
 	public static Factory getOrCreateFrom(ComponentSupplier componentSupplier) {
 		return componentSupplier.getOrCreate(Factory.class, () -> new Factory(componentSupplier));
-	}	
-	
+	}
+
 	public static Factory getInstance() {
 		return getOrCreateFrom(ComponentSupplier.getInstance());
 	}
-	
+
 	List<Directive> getAllDirectives() {
 		List<Directive> directives = new ArrayList<>();
 		directives.addAll(
@@ -96,17 +96,17 @@ public class Factory implements Component {
 		directives.addAll(
 			Stream.of(Directive.Functions.ForCollection.values()).collect(Collectors.toList()));
 		return directives;
-	}			
+	}
 
 	Map<String, Directive> getDirectives(Config.OnException[] onException) {
 		Map<String, Directive> directives = new LinkedHashMap<>();
-		if (onException != null) {					
+		if (onException != null) {
 			for (Config.OnException temp : onException) {
 				for (Directive directive : getAllDirectives()) {
 					if (directive.getName().equals(temp.getDirective())) {
 						for (String target : temp.getTargets()) {
 							directives.put(target, directive);
-						}								
+						}
 						break;
 					}
 				}
@@ -122,7 +122,7 @@ public class Factory implements Component {
 			beanClassNameOrContextName = beanClassNameOrContextName.split("#")[1];
 			instance = ((Map<?, ?>) beanContainer).get(beanClassNameOrContextName);
 		} else if (Class.forName("org.springframework.context.ApplicationContext").isInstance(beanContainer)) {
-			Class<?> targetClass = (beanContainer != null ? beanContainer instanceof Class? (Class<?>)beanContainer : beanContainer.getClass() : null); 
+			Class<?> targetClass = (beanContainer != null ? beanContainer instanceof Class? (Class<?>)beanContainer : beanContainer.getClass() : null);
 			instance = Members.findOne(
 				MethodCriteria.forEntireClassHierarchy().name(
 					methodName -> methodName.matches("getBean")
@@ -136,9 +136,9 @@ public class Factory implements Component {
 				targetClass
 			).invoke(beanContainer, beanClassNameOrContextName.split("#")[1]);
 		}
-		
+
 		return instance;
-	}	
+	}
 
 	Function<Config, Functions> createAsyncFunctionsForCollection() {
 		return (config) -> Functions.ForCollection.Async.create(
@@ -149,7 +149,7 @@ public class Factory implements Component {
 			config.getLoopResult(),
 			config.getThreadsNumberAsInteger()
 		);
-	}		
+	}
 
 	Function<Config, Functions> createAsyncFunctionsForCollectionWithSystemManagedThreads() {
 		return (config) -> Functions.ForCollection.Async.create(
@@ -159,7 +159,7 @@ public class Factory implements Component {
 			config.getIterableObject(), config.getLoopResult()
 		);
 	}
-	
+
 
 	Function<Config, Functions> createFunctionsForCollection() {
 		return (config) -> Functions.ForCollection.create(
@@ -167,47 +167,47 @@ public class Factory implements Component {
 			ByMethodOrByFieldPropertyAccessor,
 			IterableObjectHelper,
 			config.getIterableObject(), config.getLoopResult());
-	}		
-	
+	}
+
 
 	Function<Config, Functions> createAsyncFunctions() {
 		return (config) -> Functions.Async.create(
 			ByFieldOrByMethodPropertyAccessor,
 			ByMethodOrByFieldPropertyAccessor,
 			IterableObjectHelper,
-			config.getThreadsNumberAsInteger()); 
+			config.getThreadsNumberAsInteger());
 	}
-	
+
 
 	java.util.function.Supplier<Functions> createAsyncFunctionsWithSystemManagedThreads() {
 		return () -> Functions.Async.create(
 			ByFieldOrByMethodPropertyAccessor,
 			ByMethodOrByFieldPropertyAccessor,
 			IterableObjectHelper
-		); 
+		);
 	}
-	
+
 
 	java.util.function.Supplier<Functions> createFunctions() {
 		return () -> Functions.create(
 			ByFieldOrByMethodPropertyAccessor,
 			ByMethodOrByFieldPropertyAccessor,
 			IterableObjectHelper
-		); 
+		);
 	}
-	
-	
+
+
 	public Context createContext() {
 		Context context = Context.Simple.create();
 		contextList.add(context);
 		return context;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> T createContext(Class<?>... interfaces) {
 		ClassFactory classFactory = componentSupplier.getClassFactory();
 		String className =
-			Factory.class.getPackage().getName() + "." + 
+			Factory.class.getPackage().getName() + "." +
 			Virtual.class.getSimpleName().toLowerCase() + "." +
 			String.join("", Stream.of(interfaces).map(interf -> interf.getSimpleName()).toArray(String[]::new)) + "Impl";
 		List<java.lang.Class<?>> classes = new ArrayList<>(Arrays.asList(interfaces));
@@ -224,11 +224,11 @@ public class Factory implements Component {
 						(pSG, clSG, methodSG, method, options) -> {
 							String prefix = method.getName().startsWith("get")? "get" : "is";
 							String paramName = Strings.lowerCaseFirstCharacter(method.getName().replaceFirst(prefix, ""));
-							methodSG.addBodyCodeLine("return (" + 
+							methodSG.addBodyCodeLine("return (" +
 								(pSG.isUseFullyQualifiedClassNamesEnabled(options)?
 									method.getReturnType().getName():
 									method.getReturnType().getSimpleName()
-								) + 
+								) +
 							")get(\"" + paramName + "\");");
 						}
 					).setExtraElementsBuilder(
@@ -266,14 +266,14 @@ public class Factory implements Component {
 			return Driver.throwException(exc);
 		}
 	}
-	
-	
+
+
 	public Functions build(Config config, Object... beanContainers) throws Throwable {
 		Functions functions = buildFunctions(config, beanContainers);
 		functionList.add(functions);
 		return functions;
 	}
-	
+
 	private Functions buildFunctions(Config config, Object... beanContainers) throws Throwable {
 		Functions functions = createMainFunctions(config);
 		createChildren(config, functions, beanContainers);
@@ -311,7 +311,7 @@ public class Factory implements Component {
 				}
 				Objects.requireNonNull(instance, "Object " + innerConfig.getMethod() + " not found");
 				final String methodName = methodNameWrapper.get();
-				Class<?> targetClass = (instance != null ? instance instanceof Class? (Class<?>)instance : instance.getClass() : null); 
+				Class<?> targetClass = (instance != null ? instance instanceof Class? (Class<?>)instance : instance.getClass() : null);
 				Method mth = Optional.ofNullable(
 					Members.findOne(
 						MethodCriteria.byScanUpTo(c ->
@@ -335,7 +335,7 @@ public class Factory implements Component {
 						targetClass
 					)
 				);
-				
+
 				Object functionalInterface = componentSupplier.getFunctionalInterfaceFactory().getOrCreate(
 					Objects.requireNonNull(
 						mth, "Could not bind function " + instance.getClass().getName() + "::" + mth.getName() + " to any Wrapper"
@@ -353,17 +353,17 @@ public class Factory implements Component {
 	private Functions createMainFunctions(Config config) {
 		Functions functions = null;
 		if (config.isAsync() && Strings.isNotEmpty(config.getIterableObject())) {
-			functions = 
+			functions =
 				Optional.ofNullable(config.getThreadsNumberAsInteger()).map((threadsNumber) ->
 					createAsyncFunctionsForCollection().apply(config)
 				).orElseGet(() ->
 					createAsyncFunctionsForCollectionWithSystemManagedThreads().apply(config)
-				);	
+				);
 		} else if (Strings.isNotEmpty(config.getIterableObject())) {
 			functions = createFunctionsForCollection().apply(config);
 		} else if (config.isAsync()) {
-			functions = 
-				Optional.ofNullable(config.getThreadsNumberAsInteger()).map((threadsNumber) -> 
+			functions =
+				Optional.ofNullable(config.getThreadsNumberAsInteger()).map((threadsNumber) ->
 					createAsyncFunctions().apply(config)
 				).orElseGet(() ->
 					createAsyncFunctionsWithSystemManagedThreads().get()
@@ -375,21 +375,21 @@ public class Factory implements Component {
 		functions.setOnException(getDirectives(config.getOnException()));
 		return functions;
 	}
-	
+
 	public void close(Functions... functions) {
 		for (Functions function : functions) {
 			function.close();
 			functionList.remove(function);
-		}				
+		}
 	}
-	
+
 	public void close(Object... contextes) {
 		for (Object context : contextes) {
 			((Context)context).close();
 			contextList.remove(context);
-		}				
+		}
 	}
-	
+
 	@Override
 	public void close() {
 		if (functionList != null) {

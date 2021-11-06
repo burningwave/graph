@@ -34,7 +34,7 @@ import java.util.function.Predicate;
 
 public class Group<T> extends Item {
 	protected Collection<T> elements = new LinkedHashSet<>();
-	
+
 
 	public Group<T> add(T element) {
 		elements.add(element);
@@ -43,19 +43,19 @@ public class Group<T> extends Item {
 		}
 		return this;
 	}
-	
+
 	public <I extends Item> I get(String name) {
 		return get((item) -> (item instanceof Item && ((Item)item).getName().matches(name)));
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <I> I get(Predicate<I> predicate) {
-		return (I)elements.stream().filter(item -> 
+		return (I)elements.stream().filter(item ->
 			(predicate.test((I)item))
 		).findFirst().orElse(null);
 	}
-	
+
 
 	@Override
 	public void close() {

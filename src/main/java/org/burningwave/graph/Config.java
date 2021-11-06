@@ -54,7 +54,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Config implements Serializable {
 
 	private static final long serialVersionUID = -1420680417555794733L;
-	
+
 	private String name;
 	private boolean async;
 	private String threadsNumber;
@@ -85,7 +85,7 @@ public class Config implements Serializable {
 	public void setThreadsNumber(String threadsNumber) {
 		this.threadsNumber = threadsNumber;
 	}
-	
+
 	public OnException[] getOnException() {
 		return onException;
 	}
@@ -125,7 +125,7 @@ public class Config implements Serializable {
 
 	public static class OnException implements Serializable  {
 		private static final long serialVersionUID = -1638659620384801346L;
-		
+
 		private String directive;
 		private String[] targets;
 		public String getDirective() {
@@ -139,28 +139,28 @@ public class Config implements Serializable {
 		}
 		public void setTargets(String[] targets) {
 			this.targets = targets;
-		}				
+		}
 	}
-	
+
 	public static class Factory implements Component {
 		private Config.Validator configValidator;
 		private ObjectMapper objectMapper;
 		private PathHelper pathHelper;
-		
+
 		private Factory(PathHelper pathHelper, Validator configValidator, ObjectMapper objectMapper) {
 			this.configValidator = configValidator;
 			this.pathHelper =  pathHelper;
 			this.objectMapper = objectMapper;
 		}
-		
-		
+
+
 		public static Factory create(Strings stringHelper, PathHelper pathHelper, Validator configValidator, ObjectMapper objectMapper) {
 			return new Factory(pathHelper, configValidator, objectMapper);
 		}
-		
+
 		public static Factory getInstance() {
 			ComponentSupplier componentSupplier = ComponentSupplier.getInstance();
-			return componentSupplier.getOrCreate(Factory.class, () -> 
+			return componentSupplier.getOrCreate(Factory.class, () ->
 				new Factory(
 					componentSupplier.getPathHelper(),
 					componentSupplier.getOrCreate(Validator.class, () ->
@@ -170,10 +170,10 @@ public class Config implements Serializable {
 				)
 			);
 		}
-		
+
 		public Config build(String fileName) throws JsonParseException, JsonMappingException, IOException {
 			Config config = objectMapper.readValue(
-				Files.readAllBytes(Paths.get(pathHelper.getAbsolutePathOfResource(fileName))), 
+				Files.readAllBytes(Paths.get(pathHelper.getAbsolutePathOfResource(fileName))),
 				Config.class
 			);
 			adjustFields(config);
@@ -187,7 +187,7 @@ public class Config implements Serializable {
 			}
 			return config;
 		}
-		
+
 		void adjustFields(Config config) {
 			if (Strings.isNotEmpty(config.getIterableObject())) {
 				if (config.getIterableObject().contains("currentIteratedObject")) {
@@ -209,14 +209,14 @@ public class Config implements Serializable {
 				config.setThreadsNumber(
 					Integer.toString(computeThreadsNumber(config))
 				);
-			}			
+			}
 			if (config.getFunctions() != null) {
 				Stream.of(config.getFunctions()).forEach(conf -> {
 					adjustFields(conf);
 				});
 			}
 		}
-		
+
 		private Integer computeThreadsNumber(Config config) {
 			Config parent = config.getParent();
 			if (parent != null && parent.isAsync() && Strings.isNotEmpty(parent.getIterableObject())) {
@@ -227,20 +227,20 @@ public class Config implements Serializable {
 			}
 			return config.getFunctions().length;
 		}
-		
+
 		private boolean isThreadNumberAutoSet(Config config) {
 			return Strings.isEmpty(config.getThreadsNumber()) || "auto".equalsIgnoreCase(config.getThreadsNumber());
 		}
 	}
-	
+
 	static class Validator implements Component {
 		private Validator() {
 		}
-		
+
 		static Validator create() {
 			return new Validator();
 		}
-		
+
 		public List<Violation> validate(Config config){
 			List<Constraint.Violation> constraintViolations = (check(config));
 			if (config.getFunctions() != null && config.getFunctions().length > 0) {
@@ -275,18 +275,18 @@ public class Config implements Serializable {
 			}
 			return constraintViolations;
 		}
-		
+
 	}
-	
+
 	static class Constraint {
-		
+
 		static class Violation {
 			private String message;
-			
+
 			private Violation(String message) {
 				this.message = message;
 			}
-			
+
 			static Violation create(String message) {
 				return new Violation(message);
 			}
@@ -295,6 +295,6 @@ public class Config implements Serializable {
 				return message;
 			}
 		}
-		
+
 	}
 }

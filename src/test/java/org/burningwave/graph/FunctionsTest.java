@@ -16,20 +16,20 @@ import org.junit.jupiter.api.Test;
 
 
 public class FunctionsTest implements ManagedLogger {
-		
+
 	@Test
 	public void testOne() {
 		try {
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> objs = new LinkedHashMap<>();
 			objs.put("sharedService", new ServiceOne());
-			
+
 			List<Object> list = new ArrayList<>();
-			
+
 			int inputCollectionSize = 100000;
 			for (int i = 0; i < inputCollectionSize; i++) {
 				list.add(new Object());
-			}			
+			}
 			Config graphConfig = Config.Factory.getInstance().build(
 				"graphConfig/FunctionsTestChainConfig.graph"
 			);
@@ -37,10 +37,10 @@ public class FunctionsTest implements ManagedLogger {
 			Functions functions = factory.build(
 				graphConfig, objs
 			);
-			
+
 			ServiceOne.Context data = factory.createContext(ServiceOne.Context.class);
 			data.setInputCollection(list);
-			
+
 			functions.executeOn(data);
 			factory.close(functions);
 			factory.close(data);
@@ -49,15 +49,15 @@ public class FunctionsTest implements ManagedLogger {
 			logError("", exc);
 		}
 	}
-	
-	
+
+
 	@Test
 	public void iterableFunctionsTest() {
 		try {
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> services = new LinkedHashMap<>();
 			services.put("service", new ServiceTwo());
-			
+
 			Config graphConfig = Config.Factory.getInstance().build(
 				"graphConfig/IterableFunctionsTestChainConfig.graph"
 			);
@@ -76,14 +76,14 @@ public class FunctionsTest implements ManagedLogger {
 			logError("Exception occurred", exc);
 		}
 	}
-	
+
 	@Test
 	public void nestedIterableFunctionsTest() {
 		try {
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> services = new LinkedHashMap<>();
 			services.put("service", new ServiceTwo());
-			
+
 			Config graphConfig = Config.Factory.getInstance().build(
 				"graphConfig/NestedIterableFunctionsTestChainConfig.graph"
 			);
@@ -91,7 +91,7 @@ public class FunctionsTest implements ManagedLogger {
 			Functions functions = factory.build(
 				graphConfig, services
 			);
-			
+
 			Context data = factory.createContext();
 			functions.executeOn(data);
 			int total = data.get("total");

@@ -54,16 +54,16 @@ import org.burningwave.graph.ControllableContext.Directive;
 
 public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 	protected Map<String, Directive> onException;
-		
+
 	Functions() {
 		super();
 		onException = new LinkedHashMap<>();
 	}
-	
+
 	void setOnException(Map<String, Directive> onException) {
 		this.onException = onException;
 	}
-	
+
 	static Functions create(
 		PropertyAccessor byFieldOrByMethodPropertyAccessor,
 		PropertyAccessor byMethodOrByFieldPropertyAccessor,
@@ -71,12 +71,12 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 	) {
 		return new Functions();
 	}
-	
+
 	static Context.Abst castContext (Context context) {
 		return ((Context.Abst)context);
-	}	
+	}
 
-	
+
 	public void executeOn(Object object) {
 		Context context = (Context)object;
 		ManagedLoggersRepository.logDebug(getClass()::getName, "Start executing functions group {}", getName());
@@ -85,7 +85,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				context = functionWrapper.executeOn(context);
 			} catch (Throwable exc) {
 				ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
-				castContext(context).putAllDirectives(onException);					
+				castContext(context).putAllDirectives(onException);
 			}
 			if (context.containsOneOf(getName(), Directive.Functions.STOP_PROCESSING)) {
 				context.removeDirective(getName(), Directive.Functions.STOP_PROCESSING);
@@ -100,18 +100,18 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		return (exc) -> {
 			Optional.ofNullable(exc).ifPresent((exception) -> {
 				logError("Exception occurred", exception.getCause());
-				Optional.ofNullable(onException).ifPresent((onExc) -> 
+				Optional.ofNullable(onException).ifPresent((onExc) ->
 					castContext(context).putAllDirectives(onExc)
 				);
 			});
 			return null;
-		};	
+		};
 	}
 
 
 	public static class Async extends Functions {
 		protected ExecutorService executor;
-		
+
 		private Async(
 				PropertyAccessor byFieldOrByMethodPropertyAccessor,
 				PropertyAccessor byMethodOrByFieldPropertyAccessor,
@@ -128,7 +128,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		) {
 			return new Async(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, null);
 		}
-		
+
 		public static Functions.Async create(
 				PropertyAccessor byFieldOrByMethodPropertyAccessor,
 				PropertyAccessor byMethodOrByFieldPropertyAccessor,
@@ -136,15 +136,15 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				ExecutorService executor) {
 			return new Async(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, executor);
 		}
-		
+
 		public static Functions.Async create(
 				PropertyAccessor byFieldOrByMethodPropertyAccessor,
 				PropertyAccessor byMethodOrByFieldPropertyAccessor,
 				IterableObjectHelper iterableObjectHelper,
 				int threadsNumber) {
 			return new Async(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, Executors.newFixedThreadPool(threadsNumber));
-		}	
-		
+		}
+
 		@Override
 		public void executeOn(Object object) {
 			Context context = (Context)object;
@@ -169,7 +169,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			completableFutureList.clear();
 			logDebug("End executing functions group {}", getName());
 		}
-		
+
 		@Override
 		public void close() {
 			if (executor != null && !executor.isShutdown()) {
@@ -177,13 +177,13 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				executor = null;
 			}
 			super.close();
-		}		
+		}
 	}
-	
+
 	public static class ForCollection<T> extends Functions {
-		
+
 		protected AlgorithmsSupplier algorithmsSupplier;
-		
+
 		private ForCollection(AlgorithmsSupplier algorithmsSupplier) {
 			super();
 			this.algorithmsSupplier = algorithmsSupplier;
@@ -208,7 +208,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 					AlgorithmsSupplier.create(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, iterableObjectContextKey, loopResultContextKey)
 			);
 		}
-		
+
 
 		@Override
 		@SuppressWarnings("unchecked")
@@ -228,8 +228,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 			algorithmsSupplier.postLoopOperationsRetriever.accept(context);
 			logDebug("End executing functions group {}", getName());
 		}
-		
-		
+
+
 		void executeOnItem(Context context, T item, int idx) {
 			//Clone context
 			Context clonedContext = algorithmsSupplier.putIteratedObjectInContextRetriever.apply(new Object[]{context, item, idx});
@@ -246,22 +246,22 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				Driver.throwException(exc);
 			}
 		}
-		
+
 		@Override
 		public void close() {
 			algorithmsSupplier.close();
 			algorithmsSupplier = null;
 			super.close();
 		}
-		
-		private static class AlgorithmsSupplier implements Component {			
+
+		private static class AlgorithmsSupplier implements Component {
 			@SuppressWarnings("unused")
 			PropertyAccessor byFieldOrByMethodPropertyAccessor;
 			PropertyAccessor byMethodOrByFieldPropertyAccessor;
 			IterableObjectHelper iterableObjectHelper;
 			String iterableObjectContextKey;
 			String loopResultContextKey;
-			
+
 			//preLoopOperations
 			Consumer<Context> preLoopOperationsRetriever = context -> {
 				Optional.ofNullable(loopResultContextKey).ifPresent((oCDk) -> {
@@ -270,18 +270,18 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 					byMethodOrByFieldPropertyAccessor.set(context, oCDk, resultsContainer);
 				});
 			};
-			
+
 			// retrieveIterableObjectStream
-			Function<Context, Stream<?>> iterableObjectStreamRetriever = context -> 
+			Function<Context, Stream<?>> iterableObjectStreamRetriever = context ->
 				iterableObjectHelper.retrieveStream(retrieve(context, iterableObjectContextKey));
-			
+
 			// putIteratedObjectInContext
 			Function<Object[], Context> putIteratedObjectInContextRetriever = (objects) -> {
 				Context context = (Context)objects[0];
 				Context clonedContext = context.createSymmetricClone();
 				Object iterableObject = retrieve(context, iterableObjectContextKey);
 				castContext(clonedContext).setCurrentIterationObjects(
-					iterableObject, 
+					iterableObject,
 					Optional.ofNullable(loopResultContextKey).map((oCDk) ->
 						(Object[])retrieve(context, oCDk)
 					).orElse(null),
@@ -291,13 +291,13 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				);
 				return clonedContext;
 			};
-			
+
 			// postLoopOperations
 			Consumer<Context> postLoopOperationsRetriever = context -> {
-					
+
 			};
-			
-			
+
+
 			private AlgorithmsSupplier(
 				PropertyAccessor byFieldOrByMethodPropertyAccessor,
 				PropertyAccessor byMethodOrByFieldPropertyAccessor,
@@ -310,7 +310,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				this.iterableObjectContextKey = iterableObjectContextKey;
 				this.loopResultContextKey = loopResultContextKey;
 			}
-			
+
 			static AlgorithmsSupplier create(
 				PropertyAccessor byFieldOrByMethodPropertyAccessor,
 				PropertyAccessor byMethodOrByFieldPropertyAccessor,
@@ -319,11 +319,11 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				String loopResultContextKey) {
 				return new AlgorithmsSupplier(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, iterableObjectContextKey, loopResultContextKey);
 			}
-			
+
 			Object retrieve(Context context, String propertyPath) {
 				return byMethodOrByFieldPropertyAccessor.get(context, propertyPath);
 			}
-			
+
 			@Override
 			public void close() {
 				this.byFieldOrByMethodPropertyAccessor = null;
@@ -333,10 +333,10 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				this.loopResultContextKey = null;
 			}
 		}
-		
+
 		public static class Async<T> extends Functions.ForCollection<T> {
 			protected ExecutorService executor;
-			
+
 			private Async(
 					AlgorithmsSupplier algorithmsSupplier,
 					ExecutorService executor) {
@@ -364,16 +364,16 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 					,executor
 				);
 			}
-			
+
 			public static <T> ForCollection.Async<T> create(
 					PropertyAccessor byFieldOrByMethodPropertyAccessor,
 					PropertyAccessor byMethodOrByFieldPropertyAccessor,
-					IterableObjectHelper iterableObjectHelper, 
+					IterableObjectHelper iterableObjectHelper,
 					String collectionContextKey,
 					String loopResultContextKey) {
 				return create(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, collectionContextKey, loopResultContextKey, (ExecutorService)null);
 			}
-			
+
 			public static <T> ForCollection.Async<T> create(
 					PropertyAccessor byFieldOrByMethodPropertyAccessor,
 					PropertyAccessor byMethodOrByFieldPropertyAccessor,
@@ -383,8 +383,8 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 					Integer threadsNumber) {
 				return create(byFieldOrByMethodPropertyAccessor, byMethodOrByFieldPropertyAccessor, iterableObjectHelper, collectionContextKey, loopResultContextKey, Executors.newFixedThreadPool(threadsNumber));
 			}
-			
-			
+
+
 			@Override
 			@SuppressWarnings("unchecked")
 			public void executeOn(Object object) {
@@ -414,7 +414,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 				completableFutureList.clear();
 				logDebug("End executing functions group {}", getName());
 			}
-			
+
 			@Override
 			public void close() {
 				if (executor != null && !executor.isShutdown()) {
@@ -426,7 +426,7 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 		}
 	}
 
-	
+
 	@Override
 	public void close() {
 		if (elements != null) {

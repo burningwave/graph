@@ -34,8 +34,8 @@ import org.burningwave.core.ManagedLogger;
 public abstract class Item implements Component, ManagedLogger {
 	protected String name;
 	protected Item parent;
-	
-	
+
+
 	public String getName() {
 		return name;
 	}
@@ -48,7 +48,7 @@ public abstract class Item implements Component, ManagedLogger {
 	public <T extends Item> T getParent() {
 		return (T)this.parent;
 	}
-	
+
 	void setParent(Item parent) {
 		this.parent = parent;
 	}
@@ -59,5 +59,5 @@ public abstract class Item implements Component, ManagedLogger {
 		logDebug(name != null ? name : this + " finalized");
 		name = null;
 	}
-	
+
 }

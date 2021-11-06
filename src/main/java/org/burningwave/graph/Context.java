@@ -42,42 +42,43 @@ import org.burningwave.core.extension.concurrent.Mutex;
 
 
 @SuppressWarnings("unchecked")
-public interface Context extends 
-	Component, 
-	IterableObjectSupport, 
+public interface Context extends
+	Component,
+	IterableObjectSupport,
 	ControllableContext,
 	ListenableContext,
-	Cleanable, 
+	Cleanable,
 	Serializable {
-	
+
 	static enum Operation {
 		PUT, REMOVE
 	}
-	
+
 	public <T> T get(Object key);
-	
+
 	public Context removeAll(Object... keys);
 
 	public <K, V> Context put(K key, V value);
-	
+
 	public Context putAll(Map<?, ?> inputContainer);
 
 	public Context putAll(Context input);
 
+	@Override
 	public void close();
-	
+
 	public Context createSymmetricClone();
-	
+
 	static class IterationContext<T> implements Serializable {
 
 		private static final long serialVersionUID = 9013466754089134552L;
-		
+
 		private T iterableObject;
 		private Object[] loopResult;
 		private Object currentIteratedObject;
 		private Integer index;
 		private Object currentIteratedObjectKey;
-		
+
 		private IterationContext(T iterableObject, Object[] loopResult, Object input, Integer index, Object key){
 			this.iterableObject = iterableObject;
 			this.currentIteratedObject = input;
@@ -85,18 +86,18 @@ public interface Context extends
 			this.loopResult = loopResult;
 			this.currentIteratedObjectKey = key;
 		}
-		
+
 		static <T> IterationContext<T> create(T iterableObject, Object[] loopResult, Object input, Integer index, Object key) {
-			return new IterationContext<T>(iterableObject, loopResult, input, index, key);
+			return new IterationContext<>(iterableObject, loopResult, input, index, key);
 		}
-		
+
 		Object getCurrentIteratedObject() {
 			return currentIteratedObject;
 		}
 		void setCurrentIteratedObject(Object input) {
 			this.currentIteratedObject = input;
 		}
-		
+
 		Object getCurrentIterationResult() {
 			return loopResult[index];
 		}
@@ -117,13 +118,13 @@ public interface Context extends
 		}
 
 		void setIndex(Integer index) {
-			this.index = index;			
+			this.index = index;
 		}
 		Integer getIndex() {
 			return this.index;
 		}
 
-		
+
 		<K> K getKey() {
 			return (K)currentIteratedObjectKey;
 		}
@@ -136,7 +137,7 @@ public interface Context extends
 
 	static abstract class Abst implements Context {
 		private static final long serialVersionUID = 8260204603417876527L;
-		
+
 		protected Map<Object, Object> container;
 		protected Map<String, Directive> executionDirectiveForGroupName;
 		protected IterationContext<Object> iterationContext;
@@ -157,21 +158,21 @@ public interface Context extends
 					mutexManager.unlockMutexes(Operation.PUT, key, value);
 					return val;
 				}
-				
+
 				@Override
 				public Object remove(Object key) {
 					Object value = super.remove(key);
 					mutexManager.unlockMutexes(Operation.REMOVE, key, value);
 					return value;
 				}
-				
+
 			};
-			executionDirectiveForGroupName = new ConcurrentHashMap<String, Directive>();
+			executionDirectiveForGroupName = new ConcurrentHashMap<>();
 			mutexManager = Mutex.Manager.ForMap.create(this::get);
 
 		}
-		
-		
+
+
 		public Abst(Map<Object, Object> container, Map<String, Directive> executionDirectiveForGroupName,
 				Mutex.Manager.ForMap<Operation, Object, Object> mutexManager) {
 			super();
@@ -181,41 +182,42 @@ public interface Context extends
 		}
 
 
-		abstract Context putAllDirectives(Map<String, Directive> directives);	
-		
+		abstract Context putAllDirectives(Map<String, Directive> directives);
+
 		@Override
-		
+
 		public <T> T get(Object key) {
 			try {
 				return (T)container.get(key);
 			} catch (NullPointerException exc) {}
 			return null;
-		}		
-		
-		
+		}
+
+
 		<T> IterationContext<T> removeIterationContext() {
 			IterationContext<T> itrCnt = (IterationContext<T>)iterationContext;
 			setCurrentIterationContext(null);
 			return itrCnt;
 		}
-		
-		
+
+
 		void setCurrentIterationContext(IterationContext<?> itrCnt) {
 			iterationContext = (IterationContext<Object>)itrCnt;
 		}
-		
-		
+
+
 		<T> IterationContext<T> getCurrentIteratedContainer() {
 			return (IterationContext<T>)iterationContext;
 		}
-		
+
+		@Override
 		public boolean containsOneOf(String name, Directive... directives) {
-			return 
-				Stream.of(directives).filter((directive) -> 
+			return
+				Stream.of(directives).filter((directive) ->
 					executionDirectiveForGroupName.get(name) == directive
 				).findFirst().isPresent();
-		}	
-		
+		}
+
 		void setCurrentIterationObjects(
 				Object iterableObject,
 				Object[] loopResult,
@@ -223,7 +225,7 @@ public interface Context extends
 				Integer index,
 				Object key) {
 			Optional.of(
-				Optional.ofNullable(iterationContext).orElseGet(() -> 
+				Optional.ofNullable(iterationContext).orElseGet(() ->
 					this.iterationContext = IterationContext.create(iterableObject, loopResult, currentIterationObject, index, key)
 				)
 			).ifPresent(itrCnt -> {
@@ -234,15 +236,15 @@ public interface Context extends
 				itrCnt.setKey(key);
 			});
 		}
-		
+
 		@Override
 		public Integer getCurrentIterationIndex() {
 			return Optional.ofNullable(iterationContext)
 					.map((iterationContext) -> iterationContext.getIndex()).orElse(null);
 		}
-		
+
 		@Override
-		
+
 		public <T> T getCurrentIteratedObject() {
 			return (T)Optional.ofNullable(iterationContext)
 					.map((iterationContext) -> iterationContext.getCurrentIteratedObject()).orElse(null);
@@ -258,15 +260,15 @@ public interface Context extends
 				"setCurrentIterationResult calling failed cause " + getClass() + " not contains currentIterationContext.loopResult"
 			).setCurrentIterationResult(obj);
 		}
-			
+
 
 		@Override
-		
+
 		public <T> T getCurrentIterationResult() {
 			return (T)Optional.ofNullable(iterationContext)
 				.map((iterationContext) -> iterationContext.getCurrentIterationResult()).orElse(null);
 		}
-		
+
 		Context.Abst cast(Context context) {
 			return ((Context.Abst)context);
 		}
@@ -279,14 +281,14 @@ public interface Context extends
 			iterationContext = null;
 			return (C)this;
 		}
-	
+
 
 		<K, V> void clearContainer() {
 			container.forEach((key, value) ->
 				mutexManager.unlockMutexes(Operation.REMOVE, key, container.remove(key))
 			);
 		}
-		
+
 		@Override
 		public void close() {
 			clear();
@@ -296,13 +298,13 @@ public interface Context extends
 			mutexManager = null;
 		}
 	}
-	
+
 	static class Simple extends Abst  {
 
 		private static final long serialVersionUID = -7459443347382714306L;
 		protected Context parent;
-		
-		
+
+
 		protected Simple(Map<Object, Object> container, Map<String, Directive> executionDirectiveForGroupName,
 				Mutex.Manager.ForMap<Operation, Object, Object> mutexManager) {
 			super(container, executionDirectiveForGroupName, mutexManager);
@@ -315,13 +317,13 @@ public interface Context extends
 		public static Context create() {
 			return new Simple();
 		}
-		
+
 		@Override
 		public <K, V> Context put(K key, V value) {
 			container.put(key, value);
 			return this;
 		}
-		
+
 		@Override
 		public Context removeAll(Object... keys) {
 			if (keys != null && keys.length > 0) {
@@ -333,7 +335,7 @@ public interface Context extends
 			}
 			return this;
 		}
-		
+
 		@Override
 		public Context putAll(Map<?, ?> inputContainer) {
 			if (container != inputContainer) {
@@ -350,7 +352,7 @@ public interface Context extends
 
 		@Override
 		public Context removeDirective(String groupName, Directive directive) {
-			executionDirectiveForGroupName.remove(groupName, directive);	
+			executionDirectiveForGroupName.remove(groupName, directive);
 			return this;
 		}
 
@@ -375,7 +377,7 @@ public interface Context extends
 			}
 			return this;
 		}
-		
+
 		@Override
 		public void close() {
 			if (parent == null) {
@@ -383,17 +385,17 @@ public interface Context extends
 			}
 		}
 
-		
+
 		@Override
 		public <V> V waitForPut(Object key, Predicate<V> predicate, int... timeout) throws InterruptedException {
-			return (V)mutexManager.waitFor(Operation.PUT, (Object)key, (Predicate<Object>)predicate);
+			return (V)mutexManager.waitFor(Operation.PUT, key, (Predicate<Object>)predicate);
 		}
 
 
 		@Override
-		
+
 		public <V> V waitForRemove(Object key, Predicate<V> predicate, int... timeout) throws InterruptedException {
-			return (V)mutexManager.waitFor(Operation.REMOVE, (Object)key, (Predicate<Object>)predicate);
+			return (V)mutexManager.waitFor(Operation.REMOVE, key, (Predicate<Object>)predicate);
 		}
 	}
 }

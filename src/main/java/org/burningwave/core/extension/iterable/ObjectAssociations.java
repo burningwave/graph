@@ -43,9 +43,10 @@ public class ObjectAssociations<A, B, C> implements Component, Serializable {
 	private java.util.Map<A, Map<B, C>> associations;
 
 	public ObjectAssociations() {
-		associations = new LinkedHashMap<A, Map<B, C>>();
+		associations = new LinkedHashMap<>();
 	}
 
+	@Override
 	public ObjectAssociations<A, B, C> clear() {
 		associations.clear();
 		return this;
@@ -62,7 +63,7 @@ public class ObjectAssociations<A, B, C> implements Component, Serializable {
 			synchronized (this) {
 				rightAssociations = associations.get(a);
 				if (rightAssociations == null) {
-					rightAssociations = new LinkedHashMap<B, C>();
+					rightAssociations = new LinkedHashMap<>();
 					associations.put(a, rightAssociations);
 				}
 			}

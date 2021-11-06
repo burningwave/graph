@@ -51,11 +51,11 @@ public class ParallelTasksManager implements Component {
 		tasks = new CopyOnWriteArrayList<>();
 		this.maxParallelTasks = maxParallelTasks;
 	}
-	
+
 	public static ParallelTasksManager create(int maxParallelTasks) {
 		return new ParallelTasksManager(maxParallelTasks);
 	}
-	
+
 	public static ParallelTasksManager create() {
 		return new ParallelTasksManager(Runtime.getRuntime().availableProcessors());
 	}
@@ -83,7 +83,7 @@ public class ParallelTasksManager implements Component {
 		}
 		tasks.removeAll(tasks);
 	}
-	
+
 	@Override
 	public void close() {
 		waitForTasksEnding();

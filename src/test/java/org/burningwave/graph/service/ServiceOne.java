@@ -9,11 +9,11 @@ import org.burningwave.graph.IterableObjectSupport;
 import org.burningwave.graph.ListenableContext;
 
 public class ServiceOne implements ManagedLogger {
-	
+
 	public static int loadCounter = 1;
 	public static int updateCounter = 1;
-	
-	
+
+
 	public Context load(Context ctx) {
 		Object obj = ctx.getCurrentIteratedObject();
 		int idx = ctx.getInputCollection().indexOf(obj);
@@ -31,8 +31,8 @@ public class ServiceOne implements ManagedLogger {
 		logInfo("LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
 		return ctx;
 	}
-	
-	
+
+
 	public static Context staticLoad(Context ctx) {
 		Object obj = ctx.getCurrentIteratedObject();
 		int idx = -1;
@@ -42,13 +42,13 @@ public class ServiceOne implements ManagedLogger {
 		ManagedLoggersRepository.logInfo(() -> ServiceOne.class.getName(), "LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
 		return ctx;
 	}
-	
-	
+
+
 	public void load() {
 		logInfo("void load entered");
 	}
-	
-	
+
+
 	public void update(Context ctx) throws Exception {
 		Object obj = ctx.getCurrentIteratedObject();
 		int idx = -1;
@@ -68,7 +68,7 @@ public class ServiceOne implements ManagedLogger {
 		}
 		logInfo("UPDATE object at index {}, result: {}", idx, ctx.getCurrentIterationResult());
 	}
-	
+
 	public void waitFor(Context ctx) throws InterruptedException {
 		//Attenzione perchè blocca l'esecuzione in caso non venga inserito l'elemento per cui si aspetta
 		String sam = ctx.waitForPut("name", (value) -> value != null && value.equals("Sam"));
@@ -76,14 +76,14 @@ public class ServiceOne implements ManagedLogger {
 		//TODO: aggiungere funzionalità di ascolto eventi
 		ctx.setName(null);
 	}
-	
+
 	public interface Context extends IterableObjectSupport, ListenableContext {
 		public List<?> getInputCollection();
-		
+
 		public void setName(String string);
 
 		public void setInputCollection(List<?> value);
-		
+
 		public boolean isValid();
 	}
 

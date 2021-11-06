@@ -42,7 +42,7 @@ import org.burningwave.core.Component;
 import org.burningwave.core.extension.concurrent.Cycler.Runnable;
 
 public class CollectionManager<T> implements Component {
-	
+
 	private ConcurrentHelper concurrentHelper;
 	private Map<Collection<T>, CollectionWrapper<T>> collectionWrapper;
 	private List<Cycler.Thread> threadList;
@@ -50,8 +50,8 @@ public class CollectionManager<T> implements Component {
 	private int threadNumber;
 	private int threadPriority;
 	private long waitInterval;
-	
-	
+
+
 	private CollectionManager(ConcurrentHelper concurrentHelper, String threadsGroupName, int threadsNumber, int threadPriority, long waitInterval) {
 		this.concurrentHelper = concurrentHelper;
 		this.threadsGroupName = threadsGroupName;
@@ -59,8 +59,8 @@ public class CollectionManager<T> implements Component {
 		this.threadPriority = threadPriority;
 		this.waitInterval = waitInterval;
 	}
-	
-	
+
+
 	public static <T> CollectionManager<T> create(ConcurrentHelper concurrentHelper, String threadsGroupName, int threadsNumber, int threadPriority, long waitInterval) {
 		return new CollectionManager<>(concurrentHelper, threadsGroupName, threadsNumber, threadPriority, waitInterval);
 	}
@@ -92,21 +92,21 @@ public class CollectionManager<T> implements Component {
 						}
 					}
 				},
-				getThreadNewName(i), 
+				getThreadNewName(i),
 				threadPriority
 			);
 			thrWrp.start();
 		}
 	}
-	
+
 	private String getThreadNewName() {
 		return getThreadNewName(threadList.size() + 1);
 	}
-	
+
 	private String getThreadNewName(int idx) {
 		return threadsGroupName + "[" + idx + "]";
 	}
-	
+
 	public void add(Collection<T> coll) {
 		Optional.ofNullable(collectionWrapper).ifPresent((collectionWrapper) -> {
 			if (!collectionWrapper.containsKey(coll)) {
@@ -117,12 +117,12 @@ public class CollectionManager<T> implements Component {
 				}
 			}
 		});
-	}	
+	}
 
 	public CollectionWrapper<T> get(Collection<CompletableFuture<?>> coll) {
 		return collectionWrapper.get(coll);
 	}
-	
+
 	public void markAsUseless(Collection<CompletableFuture<?>> coll) {
 		Optional.ofNullable(threadList).ifPresent((threadList) -> {
 			Cycler.Thread thread = new Cycler.Thread(
@@ -147,7 +147,7 @@ public class CollectionManager<T> implements Component {
 			thread.start();
 		});
 	}
-	
+
 	public void stop() {
 		try {
 			finalize();
@@ -155,7 +155,7 @@ public class CollectionManager<T> implements Component {
 			ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
 		}
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
 		Optional.ofNullable(collectionWrapper).ifPresent((collectionWrapper) -> {
@@ -173,20 +173,20 @@ public class CollectionManager<T> implements Component {
 			threadList.clear();
 		});
 	}
-	
+
 	public static class Cycler {
-		
+
 		public static class Thread extends org.burningwave.core.extension.concurrent.Cycler.Thread {
 			private Collection<Thread> threadCollection;
-			
+
 			public Thread(
-				Collection<Thread> threadCollection, 
+				Collection<Thread> threadCollection,
 				org.burningwave.core.extension.concurrent.Cycler.Runnable function,
 				String name, int priority) {
 				super(function, name, priority);
 				this.threadCollection = threadCollection;
 			}
-			
+
 			@Override
 			public void run() {
 				threadCollection.add(this);
@@ -200,19 +200,19 @@ public class CollectionManager<T> implements Component {
 class CollectionWrapper<T> {
 	private Collection<T> collection;
 	private boolean useless;
-	
+
 	CollectionWrapper(Collection<T> collection) {
 		this.collection = collection;
 	}
-	
+
 	void setUseless(boolean value) {
 		this.useless = value;
 	}
-	
+
 	boolean isUseless() {
 		return this.useless;
 	}
-	
+
 	Collection<T> getCollection() {
 		return this.collection;
 	}

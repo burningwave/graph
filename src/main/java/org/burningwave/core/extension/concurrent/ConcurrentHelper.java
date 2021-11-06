@@ -37,17 +37,17 @@ import java.util.concurrent.CompletableFuture;
 import org.burningwave.core.Component;
 
 public class ConcurrentHelper implements Component {
-	
+
 	private ConcurrentHelper() {}
-	
+
 	public static ConcurrentHelper create() {
 		return new ConcurrentHelper();
 	}
-	
+
 	protected void joinAll(CompletableFuture<?>... completableFutures) {
-		for (int i = 0; i < completableFutures.length; i++) {
-			if (completableFutures[i] != null) {
-				completableFutures[i].join();
+		for (CompletableFuture<?> completableFuture : completableFutures) {
+			if (completableFuture != null) {
+				completableFuture.join();
 			}
 		}
 	}
@@ -64,8 +64,8 @@ public class ConcurrentHelper implements Component {
 		}
 		return removed;
 	}
-	
-	
+
+
 	public void waitFor(long interval) {
 		try {
 			Thread.sleep(interval);
@@ -73,5 +73,5 @@ public class ConcurrentHelper implements Component {
 			ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
 		}
 	}
-	
+
 }
