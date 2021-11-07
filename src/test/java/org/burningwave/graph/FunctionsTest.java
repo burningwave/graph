@@ -1,6 +1,8 @@
 package org.burningwave.graph;
 
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -15,11 +17,11 @@ import org.burningwave.graph.service.ServiceTwo;
 import org.junit.jupiter.api.Test;
 
 
-public class FunctionsTest implements ManagedLogger {
+public class FunctionsTest extends BaseTest {
 
 	@Test
 	public void testOne() {
-		try {
+		testDoesNotThrow(() -> {
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> objs = new LinkedHashMap<>();
 			objs.put("sharedService", new ServiceOne());
@@ -45,15 +47,13 @@ public class FunctionsTest implements ManagedLogger {
 			factory.close(functions);
 			factory.close(data);
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " succesfully completed");
-		} catch (Throwable exc) {
-			logError("", exc);
-		}
+		});
 	}
 
 
 	@Test
 	public void iterableFunctionsTest() {
-		try {
+		testDoesNotThrow(() -> {
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> services = new LinkedHashMap<>();
 			services.put("service", new ServiceTwo());
@@ -72,14 +72,12 @@ public class FunctionsTest implements ManagedLogger {
 			factory.close(functions);
 			assertEquals(ServiceTwo.PERSONS_COLLECTION_SIZE, persons.size());
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " succesfully completed");
-		} catch (Throwable exc) {
-			logError("Exception occurred", exc);
-		}
+		});
 	}
 
 	@Test
 	public void nestedIterableFunctionsTest() {
-		try {
+		testDoesNotThrow(() -> {
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " started");
 			Map<String, Object> services = new LinkedHashMap<>();
 			services.put("service", new ServiceTwo());
@@ -98,8 +96,6 @@ public class FunctionsTest implements ManagedLogger {
 			factory.close(functions);
 			assertEquals(ServiceTwo.PERSONS_COLLECTION_SIZE * ServiceTwo.PERSONS_COLLECTIONS_NUMBER, total);
 			logInfo(new Object() {}.getClass().getEnclosingMethod().getName() + " succesfully completed");
-		} catch (Throwable exc) {
-			logError("Exception occurred", exc);
-		}
+		});
 	}
 }
