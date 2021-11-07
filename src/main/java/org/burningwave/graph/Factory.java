@@ -255,7 +255,7 @@ public class Factory implements Component {
 		//Class<?> cls = classFactory.getOrBuild(codeGeneratorForContext.generate(className, Context.Simple.class, interfaces), this.getClass().getClassLoader());
 		try {
 			return (T)Members.findOne(
-				MethodCriteria.forEntireClassHierarchy().name(
+				MethodCriteria.withoutConsideringParentClasses().name(
 					"create"::equals
 				).and().parameterTypes(
 					paramsType -> paramsType.length == 0
