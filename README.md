@@ -27,6 +27,10 @@ To include Burningwave Graph in your projects simply use with **Apache Maven**:
 </dependency>
 ```
 
+## Usage
+
+Examples on how to use this library can be found in the class [org.burningwave.graph.FunctionsTest](https://github.com/burningwave/graph/blob/master/src/test/java/org/burningwave/graph/FunctionsTest.java).
+
 <br />
 
 # <a name="Ask-for-assistance"></a>Ask for assistance
