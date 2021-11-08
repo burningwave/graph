@@ -1,8 +1,6 @@
 package org.burningwave.graph;
 
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.burningwave.core.ManagedLogger;
 import org.burningwave.graph.bean.Person;
 import org.burningwave.graph.service.ServiceOne;
 import org.burningwave.graph.service.ServiceTwo;
@@ -33,6 +30,7 @@ public class FunctionsTest extends BaseTest {
 				list.add(new Object());
 			}
 			Config graphConfig = Config.Factory.getInstance().build(
+				//Loading configuration file located in the folder src/test/resources/graphConfig
 				"graphConfig/FunctionsTestChainConfig.graph"
 			);
 			Factory factory = Factory.getInstance();
@@ -59,6 +57,7 @@ public class FunctionsTest extends BaseTest {
 			services.put("service", new ServiceTwo());
 
 			Config graphConfig = Config.Factory.getInstance().build(
+				//Loading configuration file located in the folder src/test/resources/graphConfig
 				"graphConfig/IterableFunctionsTestChainConfig.graph"
 			);
 			Factory factory = Factory.getInstance();
@@ -83,6 +82,7 @@ public class FunctionsTest extends BaseTest {
 			services.put("service", new ServiceTwo());
 
 			Config graphConfig = Config.Factory.getInstance().build(
+				//Loading configuration file located in the folder src/test/resources/graphConfig
 				"graphConfig/NestedIterableFunctionsTestChainConfig.graph"
 			);
 			Factory factory = Factory.getInstance();
