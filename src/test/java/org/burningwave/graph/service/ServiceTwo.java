@@ -13,7 +13,7 @@ import org.burningwave.graph.bean.Person;
 public class ServiceTwo implements ManagedLogger {
 
 	public static final int PERSONS_COLLECTION_SIZE = 10000;
-	public static final int PERSONS_COLLECTIONS_NUMBER = 100;
+	public static final int PERSONS_COLLECTIONS_NUMBER = 50;
 
 	public void loadCollectionOfCollection(Context data) {
 		List<List<Person>> listOfPersonList = new ArrayList<>();
