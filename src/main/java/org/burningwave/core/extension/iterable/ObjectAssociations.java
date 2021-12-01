@@ -35,7 +35,6 @@ import java.util.Map;
 import org.burningwave.core.Component;
 
 
-@SuppressWarnings("unchecked")
 public class ObjectAssociations<A, B, C> implements Component, Serializable {
 
 	private static final long serialVersionUID = -8746196679726732982L;
@@ -47,9 +46,8 @@ public class ObjectAssociations<A, B, C> implements Component, Serializable {
 	}
 
 	@Override
-	public ObjectAssociations<A, B, C> clear() {
+	public void clear() {
 		associations.clear();
-		return this;
 	}
 
 	public C getRightAssociationFor(A a, B b) {
