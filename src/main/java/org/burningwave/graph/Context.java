@@ -274,12 +274,11 @@ public interface Context extends
 		}
 
 		@Override
-		public <C extends Cleanable> C clear() {
+		public void clear() {
 			clearContainer();
 			mutexManager.clearMutexes();
 			executionDirectiveForGroupName.clear();
 			iterationContext = null;
-			return (C)this;
 		}
 
 

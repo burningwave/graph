@@ -28,7 +28,7 @@
  */
 package org.burningwave.core.extension.concurrent;
 
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,7 +68,7 @@ public class ParallelTasksManager implements Component {
 			try {
 				task.run();
 			} catch (Throwable exc) {
-				ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
+				ManagedLoggerRepository.logError(getClass()::getName, "Exception occurred", exc);
 			}
 		}, executorService));
 	}

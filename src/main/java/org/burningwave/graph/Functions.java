@@ -29,7 +29,7 @@
 package org.burningwave.graph;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -79,21 +79,21 @@ public class Functions extends Group<CommandWrapper<?, ?, Context, Context>> {
 
 	public void executeOn(Object object) {
 		Context context = (Context)object;
-		ManagedLoggersRepository.logDebug(getClass()::getName, "Start executing functions group {}", getName());
+		ManagedLoggerRepository.logDebug(getClass()::getName, "Start executing functions group {}", getName());
 		for (CommandWrapper<?, ?, Context, Context> functionWrapper : elements) {
 			try {
 				context = functionWrapper.executeOn(context);
 			} catch (Throwable exc) {
-				ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
+				ManagedLoggerRepository.logError(getClass()::getName, "Exception occurred", exc);
 				castContext(context).putAllDirectives(onException);
 			}
 			if (context.containsOneOf(getName(), Directive.Functions.STOP_PROCESSING)) {
 				context.removeDirective(getName(), Directive.Functions.STOP_PROCESSING);
-				ManagedLoggersRepository.logDebug(getClass()::getName, "Stopping processing functions group {}", Optional.ofNullable(getName()).orElse(""));
+				ManagedLoggerRepository.logDebug(getClass()::getName, "Stopping processing functions group {}", Optional.ofNullable(getName()).orElse(""));
 				break;
 			}
 		}
-		ManagedLoggersRepository.logDebug(getClass()::getName, "End executing functions group {}", getName());
+		ManagedLoggerRepository.logDebug(getClass()::getName, "End executing functions group {}", getName());
 	}
 
 	protected Function<Throwable, Void> getExceptionHandlingFunction(Context context) {

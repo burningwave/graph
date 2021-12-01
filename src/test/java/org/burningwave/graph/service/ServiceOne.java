@@ -1,6 +1,6 @@
 package org.burningwave.graph.service;
 
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class ServiceOne implements ManagedLogger {
 		if (obj != null) {
 			idx = ctx.getInputCollection().indexOf(obj);
 		}
-		ManagedLoggersRepository.logInfo(() -> ServiceOne.class.getName(), "LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
+		ManagedLoggerRepository.logInfo(() -> ServiceOne.class.getName(), "LOAD object at index {} {}", idx, ctx.getCurrentIteratedObject());
 		return ctx;
 	}
 

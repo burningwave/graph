@@ -28,7 +28,7 @@
  */
 package org.burningwave.core.extension.concurrent;
 
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -70,7 +70,7 @@ public class ConcurrentHelper implements Component {
 		try {
 			Thread.sleep(interval);
 		} catch (InterruptedException exc) {
-			ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
+			ManagedLoggerRepository.logError(getClass()::getName, "Exception occurred", exc);
 		}
 	}
 

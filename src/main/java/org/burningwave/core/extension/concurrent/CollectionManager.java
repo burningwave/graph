@@ -28,7 +28,7 @@
  */
 package org.burningwave.core.extension.concurrent;
 
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -81,7 +81,7 @@ public class CollectionManager<T> implements Component {
 									if (cLW.isUseless()) {
 										cL.clear();
 										collectionWrapper.remove(cL);
-										ManagedLoggersRepository.logDebug(getClass()::getName, "cleaned");
+										ManagedLoggerRepository.logDebug(getClass()::getName, "cleaned");
 									} else if (!concurrentHelper.removeAllTerminated((Collection<CompletableFuture<?>>) cLW.getCollection())){
 										concurrentHelper.waitFor(waitInterval);
 									}
@@ -152,7 +152,7 @@ public class CollectionManager<T> implements Component {
 		try {
 			finalize();
 		} catch (Throwable exc) {
-			ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
+			ManagedLoggerRepository.logError(getClass()::getName, "Exception occurred", exc);
 		}
 	}
 
@@ -167,7 +167,7 @@ public class CollectionManager<T> implements Component {
 					thr.terminate();
 					thr.join();
 				} catch (InterruptedException exc) {
-					ManagedLoggersRepository.logError(getClass()::getName, "Exception occurred", exc);
+					ManagedLoggerRepository.logError(getClass()::getName, "Exception occurred", exc);
 				}
 			});
 			threadList.clear();
