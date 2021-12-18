@@ -7,7 +7,7 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 
 [![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.burningwave/graph/0)](https://maven-badges.herokuapp.com/maven-central/org.burningwave/graph/)
 
-[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(17)-blueviolet)](https://github.com/burningwave/graph/actions/runs/1594313401)
+[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(17)-blueviolet)](https://github.com/burningwave/graph/actions/runs/1596824432)
 
 [![Coveralls github branch](https://img.shields.io/coveralls/github/burningwave/graph/master)](https://coveralls.io/github/burningwave/graph)
 [![GitHub open issues](https://img.shields.io/github/issues/burningwave/graph)](https://github.com/burningwave/graph/issues)
@@ -23,7 +23,7 @@ To include Burningwave Graph in your projects simply use with **Apache Maven**:
 <dependency>
     <groupId>org.burningwave</groupId>
     <artifactId>graph</artifactId>
-    <version>0.10.70</version>
+    <version>0.10.71</version>
 </dependency>
 ```
 
