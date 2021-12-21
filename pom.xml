@@ -115,7 +115,7 @@
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>12.41.0</version>
+			<version>12.41.1</version>
 			<exclusions>
 		        <exclusion>
 		            <groupId>io.github.toolfactory</groupId>
@@ -135,14 +135,14 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>1.2.8</version>
+			<version>1.2.9</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.2.8</version>
+			<version>1.2.9</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -167,28 +167,28 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.8.1</version>
+			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-engine</artifactId>
-			<version>1.8.1</version>
+			<version>1.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-commons</artifactId>
-			<version>1.8.1</version>
+			<version>1.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-runner</artifactId>
-			<version>1.8.1</version>
+			<version>1.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
