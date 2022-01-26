@@ -7,13 +7,13 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 
 [![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.burningwave/graph/0)](https://maven-badges.herokuapp.com/maven-central/org.burningwave/graph/)
 
-[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(17)-blueviolet)](https://github.com/burningwave/graph/actions/runs/1728715036)
+[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(17)-blueviolet)](https://github.com/burningwave/graph/actions/runs/1751502328)
 
 [![Coveralls github branch](https://img.shields.io/coveralls/github/burningwave/graph/master)](https://coveralls.io/github/burningwave/graph)
 [![GitHub open issues](https://img.shields.io/github/issues/burningwave/graph)](https://github.com/burningwave/graph/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/burningwave/graph)](https://github.com/burningwave/graph/issues?q=is%3Aissue+is%3Aclosed)
 
-[![ArtifactDownload](https://burningwave.herokuapp.com/miscellaneous-services/stats/total-downloads-badge?format=svgggggggg&artifactId=graph)](https://www.burningwave.org/artifact-downloads/?show-monthly-trend-chart=false)
+[![ArtifactDownload](https://burningwave.herokuapp.com/miscellaneous-services/stats/total-downloads-badge?format=svggggggggggg&artifactId=graph)](https://www.burningwave.org/artifact-downloads/?show-monthly-trend-chart=false)
 
 **Burningwave Graph** is a framework based on [**Burningwave Core**](https://burningwave.github.io/core/) library for creating graphs of synchronous/asynchronous Java method calls using a JSon configuration
 
@@ -23,7 +23,7 @@ To include Burningwave Graph in your projects simply use with **Apache Maven**:
 <dependency>
     <groupId>org.burningwave</groupId>
     <artifactId>graph</artifactId>
-    <version>0.10.77</version>
+    <version>0.10.78</version>
 </dependency>
 ```
 
