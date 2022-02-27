@@ -109,13 +109,13 @@
 		<dependency>
 		    <groupId>org.burningwave</groupId>
 		    <artifactId>jvm-driver</artifactId>
-		    <version>6.8.4</version>
+		    <version>6.8.6</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>12.45.2</version>
+			<version>12.45.4</version>
 			<exclusions>
 		        <exclusion>
 		            <groupId>io.github.toolfactory</groupId>
@@ -298,7 +298,7 @@
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.8</version>
+				<version>1.6.12</version>
 				<extensions>true</extensions>
 				<configuration>
 					<stagingProgressTimeoutMinutes>240</stagingProgressTimeoutMinutes>
