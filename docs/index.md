@@ -36,6 +36,5 @@ Examples on how to use this library can be found in the class [org.burningwave.g
 
 # <a name="Ask-for-assistance"></a>Ask for assistance
 **For assistance you can**:
-* [subscribe](https://www.burningwave.org/registration/) to the [forum](https://www.burningwave.org/forum/) and then ask in the topic ["How to do?"](https://www.burningwave.org/forum/forum/how-to-do/)
 * [report a bug](https://github.com/burningwave/graph/issues) here on GitHub
 * ask on [Stack Overflow](https://stackoverflow.com/search?q=burningwave)
