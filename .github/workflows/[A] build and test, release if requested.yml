@@ -7,7 +7,7 @@ on:
     paths: 
       - "src/main/**"
       - "src/test/**"
-#      - ".github/workflows/**"
+      - ".github/workflows/**"
       - "**.graph"
       - "**.properties"
       - "**.xml"
@@ -23,6 +23,9 @@ jobs:
         os: [windows-latest, ubuntu-latest, macOS-latest]
         java: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
         architecture: [x64]
+        exclude:
+          - os: ubuntu-latest
+            java: 100
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
