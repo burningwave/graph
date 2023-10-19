@@ -7,7 +7,7 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 
 [![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.burningwave/graph/0)](https://maven-badges.herokuapp.com/maven-central/org.burningwave/graph/)
 
-[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(21)-blueviolet)](https://github.com/burningwave/graph/actions/runs/6577702987)
+[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(21)-blueviolet)](https://github.com/burningwave/graph/actions/runs/6577758208)
 
 [![Coveralls github branch](https://img.shields.io/coveralls/github/burningwave/graph/master)](https://coveralls.io/github/burningwave/graph)
 [![GitHub open issues](https://img.shields.io/github/issues/burningwave/graph)](https://github.com/burningwave/graph/issues)
