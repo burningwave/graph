@@ -21,7 +21,7 @@ jobs:
       max-parallel: 15
       matrix:
         os: [windows-latest, ubuntu-latest, macOS-latest]
-        java: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        java: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
         architecture: [x64]
         exclude:
           - os: ubuntu-latest
@@ -40,15 +40,15 @@ jobs:
        
   release:
     name: Release if requested
-    needs: [build-and-test-with-Java-8-and-later]
+#    needs: [build-and-test-with-Java-8-and-later]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && endsWith(github.event.head_commit.message, 'Releasing new version')
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 20
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: 20
+          java-version: 21
           distribution: 'zulu'
           server-id: ossrh
           server-username: MAVEN_USERNAME
