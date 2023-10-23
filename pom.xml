@@ -37,7 +37,7 @@
 	
 	<name>Burningwave Graph</name>
 	<description>
-		A framework for create graphs of synchronous/asynchronous Java method calls using a JSon configuration
+		A framework for create graphs of synchronous/asynchronous Java method calls using a JSON configuration
 	</description>
 	<url>https://burningwave.github.io/graph/</url>
 	
