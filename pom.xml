@@ -9,7 +9,7 @@
 	                                                                                                            
 	The MIT License (MIT)                                                                                       
 	                                                                                                            
-	Copyright (c) 2019-2023 Roberto Gentili                                                                          
+	Copyright (c) 2019 Roberto Gentili                                                                          
 	                                                                                                            
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 	documentation files (the "Software"), to deal in the Software without restriction, including without        
@@ -32,7 +32,7 @@
 	<groupId>org.burningwave</groupId>
 	<artifactId>graph</artifactId>
 	
-	<version>0.10.113-SNAPSHOT</version>
+	<version>0.11.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>Burningwave Graph</name>
@@ -109,7 +109,7 @@
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>12.64.3</version>
+			<version>12.65.0</version>
 		</dependency>
 		
 		<dependency>
