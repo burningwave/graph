@@ -1,4 +1,4 @@
-Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=%40burningwave_org%20Graph%3A%20a%20%23Java%20framework%20based%20on%20Burningwave%20Core%20library%20for%20creating%20graphs%20of%20synchronous%2Fasynchronous%20Java%20method%20calls%20using%20a%20JSON%20configuration%20%28works%20on%20%23Java8%20%23Java9%20%23Java10%20%23Java11%20%23Java12%20%23Java13%20%23Java14%20%23Java15%20%23Java16%20%23Java17%20%23Java18%20%23Java19%20%23Java20%20%23Java21%29&url=https://www.burningwave.org/)
+Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=%40burningwave_org%20Graph%3A%20a%20%23Java%20framework%20based%20on%20Burningwave%20Core%20library%20for%20creating%20graphs%20of%20synchronous%2Fasynchronous%20Java%20method%20calls%20using%20a%20JSON%20configuration%20%28works%20on%20%23Java8%20%23Java9%20%23Java10%20%23Java11%20%23Java12%20%23Java13%20%23Java14%20%23Java15%20%23Java16%20%23Java17%20%23Java18%20%23Java19%20%23Java20%20%23Java21%20%23Java22%29&url=https://www.burningwave.org/)
 ==========
 
 <a href="https://www.burningwave.org/">
@@ -7,7 +7,7 @@ Burningwave Graph [![Tweet](https://img.shields.io/twitter/url/http/shields.io.s
 
 [![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.burningwave/graph/0)](https://maven-badges.herokuapp.com/maven-central/org.burningwave/graph/)
 
-[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(21)-blueviolet)](https://github.com/burningwave/graph/actions/runs/7151814428)
+[![Supported JVM](https://img.shields.io/badge/supported%20JVM-8%2C%209+%20(22)-blueviolet)](https://github.com/burningwave/graph/actions/runs/8907314640)
 
 [![Coveralls github branch](https://img.shields.io/coveralls/github/burningwave/graph/master)](https://coveralls.io/github/burningwave/graph)
 [![GitHub open issues](https://img.shields.io/github/issues/burningwave/graph)](https://github.com/burningwave/graph/issues)
@@ -24,7 +24,7 @@ To include Burningwave Graph in your projects simply use with **Apache Maven**:
 <dependency>
     <groupId>org.burningwave</groupId>
     <artifactId>graph</artifactId>
-    <version>0.10.112</version>
+    <version>0.11.0</version>
 </dependency>
 ```
 
